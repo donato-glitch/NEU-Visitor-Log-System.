@@ -5,53 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEU Library Visitor Log</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div id="login-section" class="container">
-        <h2>NEU Library Login</h2>
-        <button id="google-login-btn">Login with Google</button>
-    </div>
-
-    <div id="user-section" class="container" style="display:none;">
-        <h2 id="welcome-msg">Welcome to NEU Library!</h2>
-        <form id="visitorForm">
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="text" id="idNum" placeholder="Student/Employee ID" required>
-            <select id="roleType">
-                <option value="Student">Student</option>
-                <option value="Teacher">Teacher (Employee)</option>
-                <option value="Staff">Staff (Employee)</option>
-            </select>
-            <select id="college">
-                <option value="CAS">CAS</option>
-                <option value="COE">COE</option>
-                <option value="CBA">CBA</option>
-            </select>
-            <select id="purpose">
-                <option value="Research">Research</option>
-                <option value="Study">Study</option>
-                <option value="Borrow">Borrow Book</option>
-            </select>
-            <button type="submit">Record Visit</button>
-        </form>
-    </div>
-
-    <div id="admin-section" class="container" style="display:none;">
-        <h2>Admin Dashboard (Stats)</h2>
-        <div class="stats-grid">
-            <div class="card"><h3>Today</h3><p id="stat-today">0</p></div>
-            <div class="card"><h3>Students</h3><p id="stat-students">0</p></div>
-            <div class="card"><h3>Employees</h3><p id="stat-employees">0</p></div>
+    <div class="container">
+        <div id="auth-section">
+            <h2>NEU Library System</h2>
+            <button id="login-btn" style="padding: 10px; cursor: pointer;">Login with Google</button>
         </div>
-        <table id="logTable">
-            <thead>
-                <tr><th>Name</th><th>College</th><th>Time</th></tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <div id="user-section" style="display:none;">
+            <h1 id="greeting"></h1>
+            <p>Please fill out the visitor form.</p>
+            </div>
+
+        <div id="admin-section" style="display:none;">
+            <h1 id="greeting-admin">Welcome, Admin!</h1>
+            <div class="stats-grid" style="display: flex; gap: 10px;">
+                <div class="card" style="background: #004a99; color: white; padding: 20px; border-radius: 8px; flex: 1;">
+                    <h3>Daily Stats</h3>
+                    <p>15 Visitors</p>
+                </div>
+                <div class="card" style="background: #004a99; color: white; padding: 20px; border-radius: 8px; flex: 1;">
+                    <h3>Weekly Stats</h3>
+                    <p>120 Visitors</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
