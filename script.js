@@ -5,17 +5,18 @@ const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 const ADMIN_EMAIL = 'jcesperanza@neu.edu.ph';
 
+// Login Function
 document.getElementById('login-btn').addEventListener('click', async () => {
     const { error } = await _supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-           
             redirectTo: 'https://donato-glitch.github.io/NEU-Visitor-Log-System/'
         }
     });
     if (error) console.error("Login Error:", error.message);
 });
 
+// Check Session
 async function checkUser() {
     const { data: { session } } = await _supabase.auth.getSession();
     
@@ -32,6 +33,11 @@ async function checkUser() {
             document.getElementById('greeting').innerText = "Welcome, " + name + "!";
         }
     }
+}
+
+async function logout() {
+    await _supabase.auth.signOut();
+    window.location.reload();
 }
 
 checkUser();
