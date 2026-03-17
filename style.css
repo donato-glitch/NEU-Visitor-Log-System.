@@ -1,70 +1,94 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #f4f7f6;
     display: flex;
     justify-content: center;
-    padding: 50px 20px;
+    align-items: center;
+    height: 100vh;
     margin: 0;
 }
 
 .container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.card {
     background: white;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    border-top: 8px solid #0047ab; /* NEU Blue */
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 15px;
 }
 
 h2 {
-    color: #004a99;
-    text-align: center;
+    color: #0047ab;
     margin-bottom: 20px;
-    border-bottom: 2px solid #004a99;
-    padding-bottom: 10px;
 }
 
-input, select, button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 16px;
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 25px;
 }
 
-button {
-    background-color: #004a99;
+.btn-google {
+    background-color: #0047ab;
     color: white;
     border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background-color: #003366;
-}
-
-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
+    transition: 0.3s;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
+.btn-google:hover {
+    background-color: #003380;
 }
 
-th {
-    background-color: #004a99;
+.btn-logout {
+    margin-top: 20px;
+    background-color: #ff4b2b;
     color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* Admin Stats Style */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.stat-box {
+    background: #fff9e6; /* NEU Gold light */
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ffd700;
+}
+
+.stat-box h3 {
+    font-size: 12px;
+    margin: 0;
+    color: #666;
+}
+
+.stat-box p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+    color: #0047ab;
 }
