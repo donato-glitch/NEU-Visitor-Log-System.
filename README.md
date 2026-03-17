@@ -4,7 +4,7 @@ This is a web-based visitor logging system designed for the New Era University L
 
 ## 🚀 Live Application
 You can access the live application here:
-**[https://donato-glitch.github.io/NEU-Visitor-Log-System/](https://donato-glitch.github.io/NEU-Visitor-Log-System/)**
+**[https://donato-glitch.github.io/NEU-Visitor-Log-System/](https://donato-glitch.github.io/NEU-Visitor-Log-System.)**
 
 ## 🔑 Access Control Details
 The system identifies users based on their Google account email.
