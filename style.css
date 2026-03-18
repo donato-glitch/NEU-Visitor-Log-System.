@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Eto ang tamang link na galing sa GitHub mo */
+    
     background-image: url('https://raw.githubusercontent.com/donato-glitch/NEU-Visitor-Log-System/main/neu-background.jpg');
     background-size: cover;
     background-position: center;
@@ -13,7 +13,7 @@ body {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.92); /* Glass effect para kita ang building sa likod */
+    background: rgba(255, 255, 255, 0.92); 
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -47,7 +47,7 @@ h1 { color: #0047ab; font-size: 1.6rem; margin-bottom: 5px; }
     color: white;
 }
 
-/* Stats and Table styling */
+
 .stats-grid { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
 .stat-card { padding: 20px; border-radius: 12px; flex: 1; min-width: 150px; }
 .blue { background: rgba(227, 242, 253, 0.9); }
