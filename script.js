@@ -3,7 +3,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Ilagay mo dito ang email mo at email ni Prof Jerry para maging Admin
+
 const ADMIN_EMAILS = ['jcesperanza@neu.edu.ph', 'eduardo.donato@neu.edu.ph'];
 
 document.getElementById('login-btn').addEventListener('click', async () => {
