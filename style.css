@@ -1,6 +1,5 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
     background-image: url('https://raw.githubusercontent.com/donato-glitch/NEU-Visitor-Log-System/main/neu-background.jpg');
     background-size: cover;
     background-position: center;
@@ -13,17 +12,18 @@ body {
 }
 
 .card {
-    
-    background: rgba(255, 255, 255, 0.85); 
+   
+    background: rgba(255, 255, 255, 0.45); 
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     text-align: center;
     width: 350px;
-    border-top: 10px solid #0047ab;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
     
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
+    
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
 }
 
 .main-card { 
@@ -32,24 +32,39 @@ body {
 }
 
 
-.stat-card.blue { background: rgba(227, 242, 253, 0.8); }
-.stat-card.green { background: rgba(232, 245, 233, 0.8); }
-.stat-card.orange { background: rgba(255, 243, 224, 0.8); }
+.stat-card {
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.blue { background: rgba(227, 242, 253, 0.5) !important; }
+.green { background: rgba(232, 245, 233, 0.5) !important; }
+.orange { background: rgba(255, 243, 224, 0.5) !important; }
 
 
 .table-container {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
 }
 
-h1 { color: #0047ab; }
+h1, h2, h3 { 
+    color: #0047ab; 
+    text-shadow: 0px 1px 2px rgba(255,255,255,0.8); 
+}
+
 .btn-google {
-    background: white;
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid #4285f4;
     padding: 12px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: bold;
     color: #4285f4;
+    transition: 0.3s;
+}
+
+.btn-google:hover {
+    background: #4285f4;
+    color: white;
 }
