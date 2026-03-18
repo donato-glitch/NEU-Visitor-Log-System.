@@ -21,10 +21,10 @@
         </div>
 
         <div id="user-section" style="display: none;">
-            <h2 id="greeting" style="color:#0047ab; margin-top:0;">Welcome to NEU Library!</h2>
+            <h2 id="greeting">Welcome to NEU Library!</h2>
 
             <div id="admin-controls" class="admin-controls" style="display: none;">
-                <span style="font-size: 11px; font-weight: bold; color: #0047ab; letter-spacing: 1px;">ADMINISTRATOR ACCESS</span>
+                <span>ADMINISTRATOR ACCESS</span>
                 <div class="role-btns">
                     <button id="user-view-btn" onclick="toggleRole('user')" class="active">User View</button>
                     <button id="admin-view-btn" onclick="toggleRole('admin')">Admin Stats</button>
@@ -32,7 +32,7 @@
             </div>
 
             <div id="visitor-form-container">
-                <p style="margin-bottom: 15px;">Please provide your visit details:</p>
+                <p>Please record your visit details:</p>
                 <select id="user-type">
                     <option value="Student">Student</option>
                     <option value="Teacher">Teacher</option>
@@ -44,8 +44,8 @@
                     <option value="COE">COE (Engineering)</option>
                     <option value="CBA">CBA (Business Admin)</option>
                 </select>
-                <input type="text" id="reason" placeholder="Reason for visit (e.g. Research)">
-                <button onclick="submitLog()" class="btn-submit">Submit Visitor Log</button>
+                <input type="text" id="reason" placeholder="Reason for visit (e.g. Study)">
+                <button onclick="submitLog()" class="btn-submit">Submit Entry</button>
             </div>
 
             <div id="admin-view" style="display: none;">
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <button onclick="logout()" class="signout-btn">Sign Out Account</button>
+            <button onclick="logout()" class="signout-btn">Sign Out</button>
         </div>
     </div>
 </div>
