@@ -20,6 +20,12 @@
 
         <div id="user-section" class="card main-card" style="display: none;">
             <h2 id="greeting">Welcome to NEU Library!</h2>
+
+            <div id="admin-controls" style="display: none; margin: 20px 0; padding: 10px; background: #f0f4f8; border-radius: 8px;">
+                <p style="margin-bottom: 10px; font-weight: bold; color: #555;">Select Role View:</p>
+                <button onclick="toggleRole('user')" style="padding: 8px 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc;">User View</button>
+                <button onclick="toggleRole('admin')" style="padding: 8px 15px; cursor: pointer; border-radius: 5px; border: 1px solid #0047ab; background: #0047ab; color: white;">Admin View</button>
+            </div>
             
             <div id="visitor-form-container">
                 <p>Please provide your details to record your visit:</p>
@@ -43,7 +49,7 @@
             </div>
 
             <div id="admin-view" style="display: none;">
-                <hr>
+                <hr style="margin: 20px 0;">
                 <h3>Library Statistics Dashboard</h3>
                 <div class="stats-grid">
                     <div class="stat-card blue">
@@ -70,7 +76,7 @@
                 </div>
             </div>
 
-            <button onclick="logout()" class="btn-logout">Logout</button>
+            <button onclick="logout()" class="btn-logout" style="margin-top: 30px;">Logout</button>
         </div>
     </div>
     <script src="script.js"></script>
