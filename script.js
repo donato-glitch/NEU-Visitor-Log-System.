@@ -3,17 +3,16 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Login Function
+// Ilagay mo dito ang email mo at email ni Prof Jerry para maging Admin
+const ADMIN_EMAILS = ['jcesperanza@neu.edu.ph', 'eduardo.donato@neu.edu.ph'];
+
 document.getElementById('login-btn').addEventListener('click', async () => {
     await _supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: {
-            redirectTo: 'https://donato-glitch.github.io/NEU-Visitor-Log-System/'
-        }
+        options: { redirectTo: 'https://donato-glitch.github.io/NEU-Visitor-Log-System/' }
     });
 });
 
-// Check Session & Record Log
 async function checkUser() {
     const { data: { session } } = await _supabase.auth.getSession();
     
@@ -25,22 +24,42 @@ async function checkUser() {
         const fullName = user.user_metadata.full_name || user.email;
         document.getElementById('greeting').innerText = "Welcome, " + fullName;
 
-        // I-save ang log sa database (kung wala pa ngayong araw)
-        const loggedInToday = localStorage.getItem('last_log_date');
-        const today = new Date().toLocaleDateString();
+        // 1. Record Log (Para sa lahat)
+        await recordLog(fullName, user.email);
 
-        if (loggedInToday !== today) {
-            const { error } = await _supabase
-                .from('attendance')
-                .insert([{ full_name: fullName, email: user.email }]);
-            
-            if (!error) {
-                localStorage.setItem('last_log_date', today);
-                alert("Log recorded successfully!");
-            } else {
-                console.error("Error logging:", error.message);
-            }
+        // 2. Admin Check (Para makita ang table)
+        if (ADMIN_EMAILS.includes(user.email)) {
+            document.getElementById('admin-view').style.display = 'block';
+            fetchLogs();
         }
+    }
+}
+
+async function recordLog(name, email) {
+    const today = new Date().toLocaleDateString();
+    if (localStorage.getItem('last_log_date') !== today) {
+        const { error } = await _supabase.from('attendance').insert([{ full_name: name, email: email }]);
+        if (!error) localStorage.setItem('last_log_date', today);
+    }
+}
+
+async function fetchLogs() {
+    const { data, error } = await _supabase
+        .from('attendance')
+        .select('*')
+        .order('logged_at', { ascending: false });
+
+    if (!error) {
+        const tbody = document.getElementById('logs-body');
+        tbody.innerHTML = '';
+        data.forEach(log => {
+            const row = `<tr>
+                <td>${log.full_name}</td>
+                <td>${log.email}</td>
+                <td>${new Date(log.logged_at).toLocaleString()}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
     }
 }
 
