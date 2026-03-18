@@ -1,93 +1,64 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* Eto yung link para sa building background */
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('https://neu.edu.ph/main/assets/images/neu_bg.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
-.container {
-    width: 100%;
-    max-width: 420px;
-    padding: 20px;
-}
+.container { width: 100%; max-width: 420px; padding: 20px; }
 
 .card {
-    background: rgba(255, 255, 255, 0.92);
-    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 35px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     text-align: center;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
 }
 
-h1 { color: #0047ab; margin: 0 0 5px 0; font-size: 26px; }
-p { color: #333; margin-bottom: 25px; font-size: 14px; }
+h1 { color: #0047ab; margin: 0; }
+h2 { color: #0047ab; font-size: 20px; }
 
 .btn-google {
-    background: white;
-    color: #444;
-    padding: 12px 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 0 auto;
+    background: white; border: 1px solid #ddd; padding: 12px;
+    border-radius: 8px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; gap: 10px;
+    width: 100%; font-weight: bold; margin-top: 20px;
 }
 
 .btn-submit {
-    background: #0047ab;
-    color: white;
-    border: none;
-    padding: 14px;
-    width: 100%;
-    border-radius: 8px;
+    background: #0047ab; color: white; border: none; padding: 15px;
+    width: 100%; border-radius: 8px; font-weight: bold; margin-top: 10px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-    font-weight: bold;
 }
 
 select, input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    width: 100%; padding: 12px; margin: 8px 0;
+    border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;
 }
 
 .admin-controls {
-    background: rgba(0, 71, 171, 0.1);
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    background: #f0f4f8; padding: 15px; border-radius: 10px; margin-bottom: 20px;
 }
 
-.admin-controls span { font-size: 10px; font-weight: bold; color: #0047ab; }
+.label { font-size: 10px; font-weight: bold; color: #0047ab; display: block; margin-bottom: 10px; }
 
-.role-btns { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+.role-btns { display: flex; gap: 5px; justify-content: center; }
 .role-btns button { 
-    padding: 8px 12px; 
-    cursor: pointer; 
-    border-radius: 6px; 
-    border: 1px solid #0047ab; 
-    background: white; 
-    color: #0047ab;
+    padding: 8px 12px; cursor: pointer; border-radius: 5px; 
+    border: 1px solid #0047ab; background: white; color: #0047ab;
 }
 .role-btns button.active { background: #0047ab; color: white; }
 
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
 .stat-item { background: #0047ab; color: white; padding: 15px; border-radius: 10px; }
 
-.signout-btn { margin-top: 25px; color: #888; background: none; border: none; cursor: pointer; text-decoration: underline; font-size: 12px; }
+.filters { display: flex; gap: 5px; margin-bottom: 10px; }
+.filters select { font-size: 11px; padding: 8px; }
+
+.signout-btn { margin-top: 20px; background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; }
