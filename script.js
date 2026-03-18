@@ -51,15 +51,23 @@ async function submitLog() {
         college: document.getElementById('college').value,
         reason: reason
     }]);
-    alert("Visit Logged!");
+    alert("Logged Successfully!");
     document.getElementById('reason').value = "";
 }
 
 async function updateStats() {
     let { data } = await _supabase.from('attendance').select('*');
     if(data) {
-        document.getElementById('today-count').innerText = data.length;
-        document.getElementById('cics-count').innerText = data.filter(d => d.college === 'CICS').length;
+        const collegeFilter = document.getElementById('filter-college').value;
+        const typeFilter = document.getElementById('filter-type').value;
+
+        document.getElementById('total-stat').innerText = data.length;
+
+        let filtered = data;
+        if(collegeFilter !== "All") filtered = filtered.filter(d => d.college === collegeFilter);
+        if(typeFilter !== "All") filtered = filtered.filter(d => d.user_type === typeFilter);
+
+        document.getElementById('filtered-stat').innerText = filtered.length;
     }
 }
 
