@@ -13,14 +13,17 @@ body {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.92); 
+    
+    background: rgba(255, 255, 255, 0.85); 
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     text-align: center;
     width: 350px;
     border-top: 10px solid #0047ab;
-    backdrop-filter: blur(8px);
+    
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .main-card { 
@@ -28,34 +31,25 @@ body {
     max-width: 850px; 
 }
 
-h1 { color: #0047ab; font-size: 1.6rem; margin-bottom: 5px; }
 
+.stat-card.blue { background: rgba(227, 242, 253, 0.8); }
+.stat-card.green { background: rgba(232, 245, 233, 0.8); }
+.stat-card.orange { background: rgba(255, 243, 224, 0.8); }
+
+
+.table-container {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+h1 { color: #0047ab; }
 .btn-google {
     background: white;
     border: 1px solid #4285f4;
-    padding: 15px;
+    padding: 12px;
     border-radius: 50px;
-    width: 100%;
     cursor: pointer;
     font-weight: bold;
     color: #4285f4;
-    transition: 0.3s;
 }
-
-.btn-google:hover {
-    background: #4285f4;
-    color: white;
-}
-
-
-.stats-grid { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
-.stat-card { padding: 20px; border-radius: 12px; flex: 1; min-width: 150px; }
-.blue { background: rgba(227, 242, 253, 0.9); }
-.green { background: rgba(232, 245, 233, 0.9); }
-.orange { background: rgba(255, 243, 224, 0.9); }
-
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
-th { background: #0047ab; color: white; padding: 12px; }
-td { padding: 12px; border-bottom: 1px solid #eee; }
-
-.btn-logout { background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; margin-top: 20px; }
