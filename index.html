@@ -10,11 +10,10 @@
 <body>
     <div class="container">
         <div id="auth-section" class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/New_Era_University_logo.png/250px-New_Era_University_logo.png" alt="NEU Logo" class="neu-logo">
-            <h1>New Era University</h1>
-            <p>Library Visitor Log System</p>
+            <h1 style="margin-top: 10px;">New Era University</h1>
+            <p style="color: #666; font-weight: 500;">Library Visitor Log System</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <button id="login-btn" class="btn-google">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width:18px;">
                 Login with Google
             </button>
         </div>
@@ -45,7 +44,7 @@
 
             <div id="admin-view" style="display: none;">
                 <hr>
-                <h3 style="margin-top: 20px;">Library Statistics Dashboard</h3>
+                <h3>Library Statistics Dashboard</h3>
                 <div class="stats-grid">
                     <div class="stat-card blue">
                         <small>Today's Total</small>
@@ -64,15 +63,9 @@
                 <div class="table-container">
                     <table id="logs-table">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>College</th>
-                                <th>Reason</th>
-                                <th>Time</th>
-                            </tr>
+                            <tr><th>Name</th><th>College</th><th>Reason</th><th>Time</th></tr>
                         </thead>
-                        <tbody id="logs-body">
-                            </tbody>
+                        <tbody id="logs-body"></tbody>
                     </table>
                 </div>
             </div>
