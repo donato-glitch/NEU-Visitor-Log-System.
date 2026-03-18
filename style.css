@@ -1,94 +1,23 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
+table {
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
 }
 
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    text-align: center;
-    border-top: 8px solid #0047ab; /* NEU Blue */
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
 }
 
-.logo {
-    width: 100px;
-    margin-bottom: 15px;
-}
-
-h2 {
+th {
+    background-color: #f8f9fa;
     color: #0047ab;
+}
+
+#admin-view {
+    max-height: 300px;
+    overflow-y: auto;
     margin-bottom: 20px;
-}
-
-hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin-bottom: 25px;
-}
-
-.btn-google {
-    background-color: #0047ab;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: 0.3s;
-}
-
-.btn-google:hover {
-    background-color: #003380;
-}
-
-.btn-logout {
-    margin-top: 20px;
-    background-color: #ff4b2b;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Admin Stats Style */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.stat-box {
-    background: #fff9e6; /* NEU Gold light */
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #ffd700;
-}
-
-.stat-box h3 {
-    font-size: 12px;
-    margin: 0;
-    color: #666;
-}
-
-.stat-box p {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 5px 0 0 0;
-    color: #0047ab;
 }
