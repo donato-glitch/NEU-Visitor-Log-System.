@@ -45,14 +45,14 @@
 
             <div id="admin-view" style="display: none;">
                 <hr>
-                <h3>Library Statistics Dashboard</h3>
+                <h3 style="margin-top: 20px;">Library Statistics Dashboard</h3>
                 <div class="stats-grid">
                     <div class="stat-card blue">
                         <small>Today's Total</small>
                         <h2 id="today-count">0</h2>
                     </div>
                     <div class="stat-card green">
-                        <small>Employees (Teacher/Staff)</small>
+                        <small>Employees</small>
                         <h2 id="emp-count">0</h2>
                     </div>
                     <div class="stat-card orange">
@@ -64,9 +64,15 @@
                 <div class="table-container">
                     <table id="logs-table">
                         <thead>
-                            <tr><th>Name</th><th>College</th><th>Reason</th><th>Time</th></tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>College</th>
+                                <th>Reason</th>
+                                <th>Time</th>
+                            </tr>
                         </thead>
-                        <tbody id="logs-body"></tbody>
+                        <tbody id="logs-body">
+                            </tbody>
                     </table>
                 </div>
             </div>
