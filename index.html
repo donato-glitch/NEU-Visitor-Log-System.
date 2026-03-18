@@ -24,7 +24,7 @@
             <h2 id="greeting">Welcome to NEU Library!</h2>
 
             <div id="admin-controls" class="admin-controls" style="display: none;">
-                <span>ADMINISTRATOR ACCESS</span>
+                <span class="label">ADMIN PANEL</span>
                 <div class="role-btns">
                     <button id="user-view-btn" onclick="toggleRole('user')" class="active">User View</button>
                     <button id="admin-view-btn" onclick="toggleRole('admin')">Admin Stats</button>
@@ -32,7 +32,6 @@
             </div>
 
             <div id="visitor-form-container">
-                <p>Please record your visit details:</p>
                 <select id="user-type">
                     <option value="Student">Student</option>
                     <option value="Teacher">Teacher</option>
@@ -44,18 +43,32 @@
                     <option value="COE">COE (Engineering)</option>
                     <option value="CBA">CBA (Business Admin)</option>
                 </select>
-                <input type="text" id="reason" placeholder="Reason for visit (e.g. Study)">
-                <button onclick="submitLog()" class="btn-submit">Submit Entry</button>
+                <input type="text" id="reason" placeholder="Reason for visit (e.g. Research)">
+                <button onclick="submitLog()" class="btn-submit">Submit Visitor Log</button>
             </div>
 
             <div id="admin-view" style="display: none;">
+                <div class="filters">
+                    <select id="filter-college" onchange="updateStats()">
+                        <option value="All">All Colleges</option>
+                        <option value="CICS">CICS</option>
+                        <option value="CAS">CAS</option>
+                        <option value="COE">COE</option>
+                    </select>
+                    <select id="filter-type" onchange="updateStats()">
+                        <option value="All">All Roles</option>
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
                 <div class="stats-grid">
-                    <div class="stat-item"><small>Total Today</small><b id="today-count">0</b></div>
-                    <div class="stat-item"><small>CICS Count</small><b id="cics-count">0</b></div>
+                    <div class="stat-item"><small>Total Today</small><b id="total-stat">0</b></div>
+                    <div class="stat-item"><small>Filtered Result</small><b id="filtered-stat">0</b></div>
                 </div>
             </div>
 
-            <button onclick="logout()" class="signout-btn">Sign Out</button>
+            <button onclick="logout()" class="signout-btn">Sign Out Account</button>
         </div>
     </div>
 </div>
