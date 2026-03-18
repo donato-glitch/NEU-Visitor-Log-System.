@@ -1,6 +1,10 @@
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Eto ang tamang link na galing sa GitHub mo */
+    background-image: url('https://raw.githubusercontent.com/donato-glitch/NEU-Visitor-Log-System/main/neu-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,50 +13,49 @@ body {
 }
 
 .card {
-    background: white;
-    padding: 30px;
+    background: rgba(255, 255, 255, 0.92); /* Glass effect para kita ang building sa likod */
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     text-align: center;
     width: 350px;
     border-top: 10px solid #0047ab;
+    backdrop-filter: blur(8px);
 }
 
-.main-card { width: 95%; max-width: 850px; }
-.neu-logo { width: 120px; margin-bottom: 15px; height: auto; }
-h1 { color: #0047ab; font-size: 1.4rem; margin: 0; }
+.main-card { 
+    width: 95%; 
+    max-width: 850px; 
+}
+
+h1 { color: #0047ab; font-size: 1.6rem; margin-bottom: 5px; }
 
 .btn-google {
     background: white;
-    border: 1px solid #ddd;
-    padding: 12px;
+    border: 1px solid #4285f4;
+    padding: 15px;
     border-radius: 50px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
     cursor: pointer;
-    font-weight: 600;
-    margin-top: 20px;
+    font-weight: bold;
+    color: #4285f4;
     transition: 0.3s;
 }
 
-.btn-google:hover { background: #f8f9fa; transform: translateY(-2px); }
+.btn-google:hover {
+    background: #4285f4;
+    color: white;
+}
 
-.form-group { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-select, input { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none; text-align: center; }
-
-.btn-submit { background: #0047ab; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-.btn-submit:hover { background: #003580; }
-
+/* Stats and Table styling */
 .stats-grid { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
-.stat-card { padding: 20px; border-radius: 12px; flex: 1; min-width: 150px; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-.blue { background: #e3f2fd; } .green { background: #e8f5e9; } .orange { background: #fff3e0; }
+.stat-card { padding: 20px; border-radius: 12px; flex: 1; min-width: 150px; }
+.blue { background: rgba(227, 242, 253, 0.9); }
+.green { background: rgba(232, 245, 233, 0.9); }
+.orange { background: rgba(255, 243, 224, 0.9); }
 
-.table-container { overflow-x: auto; margin-top: 20px; border-radius: 8px; background: #fff; }
-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
 th { background: #0047ab; color: white; padding: 12px; }
-td { padding: 12px; border-bottom: 1px solid #eee; color: #555; }
+td { padding: 12px; border-bottom: 1px solid #eee; }
 
-.btn-logout { background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; margin-top: 20px; }
+.btn-logout { background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; margin-top: 20px; }
