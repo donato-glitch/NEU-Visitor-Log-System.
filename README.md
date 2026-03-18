@@ -1,24 +1,15 @@
 # NEU Library Visitor Log System
+Midterm Project for CIT223-18
 
-This is a web-based visitor logging system designed for the New Era University Library. It features Google Authentication and Role-Based Access Control (RBAC) to differentiate between regular students and administrators.
+## Live Demo
+[https://donato-glitch.github.io/NEU-Visitor-Log-System/]
 
-## 🚀 Live Application
-You can access the live application here:
-**[https://donato-glitch.github.io/NEU-Visitor-Log-System/](https://donato-glitch.github.io/NEU-Visitor-Log-System/)**
+## Features
+- **Google OAuth Login**: Secure login using NEU accounts.
+- **Role-Based Access**: Specialized view for Admin (Prof. Jerry Esperanza).
+- **Visitor Statistics**: Real-time stats displayed in Cards (Daily count, Employee count, College filter).
+- **Database**: Powered by Supabase.
 
-## 🔑 Access Control Details
-The system identifies users based on their Google account email.
-
-- **Regular User:** Any valid Google account.
-  - *Functionality:* Displays "Welcome to NEU Library!" and allows visitor entry.
-- **Admin User:** `jcesperanza@neu.edu.ph`
-  - *Functionality:* Displays the Admin Dashboard with Statistics Cards (Daily/Weekly) and advanced filtering options.
-
-## 🛠️ Features
-- **Google Login:** Secure authentication using Supabase and Google OAuth.
-- **Admin Dashboard:** Real-time statistics displayed in visual cards.
-- **Data Filtering:** Filter logs by date range, college, and visitor type (Student/Employee).
-- **Responsive Design:** Clean and modern UI using NEU's color scheme.
-
-## 👨‍💻 Developer
-**Eduardo D. Donato Jr.** Submitted to: **Prof. Jeremias C. Esperanza**
+## Account Roles
+- **Admin**: jcesperanza@neu.edu.ph (Can see visitor stats and filters).
+- **Regular User**: Can log their visit details (College, Reason, User Type).
