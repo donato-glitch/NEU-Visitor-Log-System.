@@ -2,7 +2,7 @@ const supabaseUrl = 'https://nkskdibhsqyxgirotoly.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rc2tkaWJoc3F5eGdpcm90b2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYxNDQsImV4cCI6MjA4OTMzMjE0NH0.yq3jFykJN4EVgIJ1gTpf1ue2tq1zNz6keVCBcLxSAwc';
 
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-const ADMIN_EMAILS = ['jcesperanza@neu.edu.ph', 'eduardo.donato@neu.edu.ph'];
+const ADMIN_EMAILS = ['jcesperanza@neu.edu.ph', 'eduardo.donato@neu.edu.ph', 'princessmarianborja@gmail.com'];
 
 document.getElementById('login-btn').addEventListener('click', async () => {
     await _supabase.auth.signInWithOAuth({
