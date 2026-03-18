@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     margin: 0;
     display: flex;
@@ -19,7 +19,7 @@ body {
 }
 
 .main-card { width: 95%; max-width: 850px; }
-.neu-logo { width: 120px; margin-bottom: 15px; }
+.neu-logo { width: 120px; margin-bottom: 15px; height: auto; }
 h1 { color: #0047ab; font-size: 1.4rem; margin: 0; }
 
 .btn-google {
@@ -41,18 +41,18 @@ h1 { color: #0047ab; font-size: 1.4rem; margin: 0; }
 .btn-google:hover { background: #f8f9fa; transform: translateY(-2px); }
 
 .form-group { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-select, input { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none; }
-select:focus, input:focus { border-color: #0047ab; }
+select, input { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; outline: none; text-align: center; }
 
-.btn-submit { background: #0047ab; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; }
+.btn-submit { background: #0047ab; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+.btn-submit:hover { background: #003580; }
 
 .stats-grid { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
 .stat-card { padding: 20px; border-radius: 12px; flex: 1; min-width: 150px; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 .blue { background: #e3f2fd; } .green { background: #e8f5e9; } .orange { background: #fff3e0; }
 
-.table-container { overflow-x: auto; margin-top: 20px; border-radius: 8px; }
+.table-container { overflow-x: auto; margin-top: 20px; border-radius: 8px; background: #fff; }
 table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
 th { background: #0047ab; color: white; padding: 12px; }
-td { padding: 12px; border-bottom: 1px solid #eee; }
+td { padding: 12px; border-bottom: 1px solid #eee; color: #555; }
 
 .btn-logout { background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; margin-top: 20px; }
