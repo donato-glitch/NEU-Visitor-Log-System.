@@ -6,98 +6,117 @@
     <title>NEU Library Management System</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<div id="auth-section" class="overlay">
-    <div class="login-card">
-        <h1>New Era University</h1>
-        <p>Library Visitor Log System</p>
-        <button id="login-btn" class="btn-google">
-            <img src="https://www.google.com/favicon.ico" width="18"> Login with NEU Google Account
-        </button>
+<div id="auth-section" class="login-page">
+    <div class="login-container">
+        <div class="login-form-side">
+            <div class="brand">NEU<span>Library</span></div>
+            <h1>Welcome Back</h1>
+            <p>Please log in using your Google account to access the library system.</p>
+            
+            <button id="login-btn" class="google-btn">
+                <img src="https://www.google.com/favicon.ico" alt="google">
+                Log In with Google
+            </button>
+            <div class="login-footer">© 2026 New Era University</div>
+        </div>
+        <div class="login-image-side">
+            <img src="https://illustrations.popsy.co/white/reading-a-book.svg" alt="Reading Illustration">
+        </div>
     </div>
 </div>
 
-<div id="user-section" style="display: none;" class="dashboard-container">
-    
-    <header class="top-bar">
-        <h2 id="greeting">Welcome to NEU Library!</h2>
-        <div id="admin-controls" style="display: none;" class="role-switcher">
-            <button id="user-view-btn" onclick="toggleRole('user')" class="active">Kiosk Mode</button>
-            <button id="admin-view-btn" onclick="toggleRole('admin')">Admin Dashboard</button>
-        </div>
-        <button onclick="logout()" class="btn-logout">Sign Out</button>
-    </header>
-
-    <main class="content">
-        <div id="visitor-form-container" class="center-content">
-            <div class="form-card">
-                <h3>Visitor Entry Form</h3>
-                <select id="user-type">
-                    <option value="Student">Student</option>
-                    <option value="Teacher">Teacher (Employee)</option>
-                    <option value="Staff">Staff (Employee)</option>
-                </select>
-                <select id="college">
-                    <option value="CICS">CICS (Computing Studies)</option>
-                    <option value="CAS">CAS (Arts and Sciences)</option>
-                    <option value="COE">COE (Engineering)</option>
-                    <option value="CBA">CBA (Business Admin)</option>
-                </select>
-                <select id="reason">
-                    <option value="Research">Research</option>
-                    <option value="Study">Self Study</option>
-                    <option value="Borrow">Borrow Books</option>
-                </select>
-                <button onclick="submitLog()" class="btn-submit">Submit Entry</button>
+<div id="user-section" style="display: none;" class="dashboard-wrapper">
+    <aside class="sidebar">
+        <div class="sidebar-logo">NEU Library</div>
+        <nav>
+            <div id="admin-nav" style="display: none;">
+                <span class="nav-label">Admin Controls</span>
+                <button onclick="toggleRole('admin')" id="admin-tab" class="active"><i class="fas fa-chart-line"></i> Dashboard</button>
             </div>
-        </div>
+            <span class="nav-label">Public Access</span>
+            <button onclick="toggleRole('user')" id="user-tab"><i class="fas fa-entry-log"></i> Kiosk Mode</button>
+        </nav>
+        <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </aside>
 
-        <div id="admin-view" style="display: none;" class="admin-grid">
-            <div class="side-panel">
-                <div class="dash-card chart-section">
-                    <h4>Total Borrowers/Visitors</h4>
-                    <div class="circle-chart">
-                        <span id="total-circle">0</span>
+    <main class="main-content">
+        <header>
+            <h2 id="greeting">Library Management System</h2>
+            <div class="user-info">
+                <span id="user-email-display">jcesperanza@neu.edu.ph</span>
+            </div>
+        </header>
+
+        <div id="admin-view" class="content-view">
+            <div class="stats-row">
+                <div class="stat-card chart-card">
+                    <h3>Total Borrowing Book</h3>
+                    <div class="chart-wrapper">
+                        <div class="donut-chart">
+                            <span id="total-circle">0</span>
+                        </div>
                     </div>
                 </div>
-                <div class="dash-card">
-                    <h4>🍔 Menu</h4>
-                    <button class="menu-item">Books</button>
-                    <button class="menu-item">Members</button>
+                <div class="stat-card menu-card">
+                    <h3>🍔 Menu</h3>
+                    <button class="list-item"><i class="fas fa-book"></i> Books</button>
+                    <button class="list-item"><i class="fas fa-user"></i> Member</button>
+                    <button class="list-item"><i class="fas fa-users"></i> Borrower</button>
                 </div>
-                <div class="dash-card">
-                    <h4>⚡ Quick Buttons</h4>
-                    <button class="action-btn">+ Add Book</button>
-                    <button class="action-btn">+ Add Member</button>
+                <div class="stat-card action-card">
+                    <h3>⚡ Quick Buttons</h3>
+                    <button class="btn-outline">+ Add Book</button>
+                    <button class="btn-outline">+ Add Member</button>
+                    <button class="btn-outline">+ Add Borrower</button>
                 </div>
             </div>
 
-            <div class="main-panel">
-                <div class="dash-card filter-bar">
-                    <input type="date" id="filter-date" onchange="updateStats()">
-                    <select id="filter-college" onchange="updateStats()">
-                        <option value="All">All Colleges</option>
-                        <option value="CICS">CICS</option>
-                        <option value="CAS">CAS</option>
-                    </select>
+            <div class="card data-table-card">
+                <div class="table-header">
+                    <h3><i class="fas fa-database"></i> Visitor Log Database</h3>
+                    <div class="filters">
+                        <input type="date" id="filter-date" onchange="updateStats()">
+                        <select id="filter-college" onchange="updateStats()">
+                            <option value="All">All Colleges</option>
+                            <option value="CICS">CICS</option>
+                            <option value="CAS">CAS</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="dash-card table-container">
-                    <h4>Visitor Log History</h4>
-                    <table id="log-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>College</th>
-                                <th>Reason</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody id="log-body">
-                            </tbody>
-                    </table>
+                <table id="log-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>College</th>
+                            <th>Reason</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="visitor-form-container" class="content-view" style="display: none;">
+            <div class="kiosk-form-card">
+                <h2>Library Visitor Log</h2>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="user-type"><option value="Student">Student</option><option value="Teacher">Teacher</option></select>
                 </div>
+                <div class="form-group">
+                    <label>College</label>
+                    <select id="college"><option value="CICS">CICS</option><option value="CAS">CAS</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <select id="reason"><option value="Research">Research</option><option value="Self Study">Self Study</option></select>
+                </div>
+                <button onclick="submitLog()" class="btn-primary">Submit Entry</button>
             </div>
         </div>
     </main>
