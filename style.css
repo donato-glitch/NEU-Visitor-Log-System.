@@ -1,77 +1,68 @@
-const supabaseUrl = 'https://nkskdibhsqyxgirotoly.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rc2tkaWJoc3F5eGdpcm90b2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYxNDQsImV4cCI6MjA4OTMzMjE0NH0.yq3jFykJN4EVgIJ1gTpf1ue2tq1zNz6keVCBcLxSAwc';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-const ADMIN_EMAILS = ['jcesperanza@neu.edu.ph', 'eduardo.donato@neu.edu.ph'];
-
-// GOOGLE LOGIN (cite: 12)
-document.getElementById('login-btn').addEventListener('click', async () => {
-    await _supabase.auth.signInWithOAuth({ 
-        provider: 'google', 
-        options: { redirectTo: window.location.href } 
-    });
-});
-
-async function checkUser() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    if (session) {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('user-section').style.display = 'flex';
-        document.getElementById('user-email-display').innerText = session.user.email;
-
-        // DIRECT REDIRECT FOR ADMIN (cite: 12)
-        if (ADMIN_EMAILS.includes(session.user.email.toLowerCase())) {
-            document.getElementById('admin-nav').style.display = 'block';
-            toggleView('admin');
-        } else {
-            toggleView('user');
-        }
-    }
+/* RESET & CORE STYLES */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body, html { 
+    height: 100%; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 
-async function loadLogs() {
-    let { data } = await _supabase.from('attendance').select('*').order('created_at', { ascending: false });
-    if (data) {
-        const dVal = document.getElementById('filter-date').value;
-        const cVal = document.getElementById('filter-college').value;
-        let filtered = data;
-        if(dVal) filtered = filtered.filter(x => x.created_at.includes(dVal));
-        if(cVal !== "All") filtered = filtered.filter(x => x.college === cVal);
-
-        document.getElementById('visitor-count').innerText = filtered.length;
-        document.getElementById('log-list').innerHTML = filtered.map(log => `
-            <tr>
-                <td><b>${log.full_name}</b></td>
-                <td>${log.college}</td>
-                <td>${log.reason}</td>
-                <td>${log.user_type}</td>
-                <td style="color:gray">${new Date(log.created_at).toLocaleTimeString()}</td>
-            </tr>
-        `).join('');
-    }
+/* LOGIN SECTION (The Gradient Fix) */
+#auth-section { 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background: linear-gradient(135deg, #a8c0ff 0%, #fbc2eb 100%); /* Blue to Pink Gradient */
 }
 
-function toggleView(view) {
-    const isAdmin = view === 'admin';
-    document.getElementById('admin-view').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('user-view').style.display = isAdmin ? 'none' : 'block';
-    document.getElementById('admin-tab').classList.toggle('active', isAdmin);
-    document.getElementById('user-tab').classList.toggle('active', !isAdmin);
-    if(isAdmin) loadLogs();
+/* THE LOGIN CARD */
+.login-card { 
+    background: white; 
+    padding: 60px 40px; 
+    border-radius: 20px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+    width: 400px; 
+    text-align: center; 
 }
 
-async function submitEntry() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    await _supabase.from('attendance').insert([{
-        full_name: session.user.user_metadata.full_name,
-        email: session.user.email,
-        user_type: document.getElementById('user-type').value,
-        college: document.getElementById('college').value,
-        reason: document.getElementById('reason').value
-    }]);
-    alert("Log submitted!");
-    if(ADMIN_EMAILS.includes(session.user.email)) loadLogs();
+.brand-title { 
+    font-size: 32px; 
+    font-weight: 800; 
+    color: #333; 
+    margin-bottom: 20px; 
 }
 
-async function logout() { await _supabase.auth.signOut(); window.location.reload(); }
-checkUser();
+.sub-text { 
+    font-size: 15px; 
+    color: #666; 
+    margin-bottom: 30px; 
+    line-height: 1.6; 
+}
+
+/* THE GOOGLE BUTTON */
+.google-btn { 
+    width: 100%; 
+    padding: 14px; 
+    border: 1px solid #ddd; 
+    border-radius: 12px; 
+    background: white; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 12px; 
+    font-size: 16px; 
+    font-weight: 600; 
+    transition: all 0.3s ease; 
+}
+
+.google-btn:hover { 
+    background: #f8f9fa; 
+    transform: translateY(-2px); 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+}
+
+.login-footer { 
+    margin-top: 30px; 
+    font-size: 12px; 
+    color: #999; 
+}
