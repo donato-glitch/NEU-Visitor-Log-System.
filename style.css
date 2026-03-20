@@ -1,84 +1,51 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                 url('https://neu.edu.ph/main/assets/images/neu_bg.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
-.container { width: 100%; max-width: 650px; padding: 20px; }
-
-.main-card {
-    background: rgba(255, 255, 255, 0.98);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    text-align: center;
+/* LOGIN OVERLAY */
+.overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.login-card {
+    background: white; padding: 40px; border-radius: 20px; text-align: center; width: 350px;
 }
 
+/* DASHBOARD CONTAINER */
+.dashboard-container { height: 100vh; display: flex; flex-direction: column; background: rgba(240, 242, 245, 0.95); }
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 15px;
-    margin-top: 20px;
+.top-bar {
+    background: #0047ab; color: white; padding: 10px 30px;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-.dash-card {
-    background: #fdfdfd;
-    padding: 15px;
-    border-radius: 12px;
-    border-top: 4px solid #0047ab;
-    text-align: left;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+.content { flex: 1; padding: 20px; overflow-y: auto; }
 
-.chart-card { text-align: center; }
+/* ADMIN GRID SYSTEM */
+.admin-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; height: 100%; }
 
+.dash-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+/* CIRCLE CHART */
 .circle-chart {
-    width: 110px; height: 110px;
-    border-radius: 50%;
-    border: 10px solid #f0f0f0;
-    border-top-color: #0047ab;
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 10px solid #e9ecef; border-top: 10px solid #0047ab;
     display: flex; align-items: center; justify-content: center;
-    margin: 10px auto;
-    font-size: 28px; font-weight: bold; color: #0047ab;
+    margin: 20px auto; font-size: 32px; font-weight: bold; color: #0047ab;
 }
 
-/* BUTTONS & FORMS */
-.menu-item, .action-btn {
-    width: 100%; padding: 10px; margin-bottom: 5px;
-    border-radius: 8px; border: 1px solid #eee;
-    background: white; cursor: pointer; text-align: left; font-size: 13px;
-}
-.action-btn { color: #0047ab; font-weight: bold; }
+/* TABLE STYLES */
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+th { background: #f8f9fa; color: #555; }
 
-.role-switcher { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-.role-switcher button {
-    padding: 8px 15px; border-radius: 20px; border: 1px solid #0047ab;
-    background: white; color: #0047ab; cursor: pointer;
-}
-.role-switcher button.active { background: #0047ab; color: white; }
-
-.filter-section {
-    margin-top: 20px; padding: 15px; background: #f0f4f8; border-radius: 12px; text-align: left;
-}
-.filter-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-
-.btn-google {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;
-    background: white; font-weight: bold; cursor: pointer;
-}
-
-.btn-submit {
-    width: 100%; padding: 15px; background: #0047ab; color: white;
-    border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px;
-}
-
-select, input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 8px; }
-.logout-link { margin-top: 25px; background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; }
+/* BUTTONS */
+.btn-google { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: bold; }
+.btn-submit { width: 100%; padding: 15px; background: #0047ab; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+.menu-item, .action-btn { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #eee; border-radius: 6px; background: white; cursor: pointer; text-align: left; }
+.role-switcher button { padding: 8px 15px; border-radius: 20px; border: 1px solid white; background: transparent; color: white; cursor: pointer; margin: 0 5px; }
+.role-switcher button.active { background: white; color: #0047ab; }
