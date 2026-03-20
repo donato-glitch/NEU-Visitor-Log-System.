@@ -27,7 +27,7 @@
         <nav>
             <div id="admin-nav" style="display: none;">
                 <p class="menu-label">Management</p>
-                <button onclick="toggleView('admin')" id="admin-tab" class="nav-item active">
+                <button onclick="toggleView('admin')" id="admin-tab" class="nav-item">
                     <i class="fas fa-chart-line"></i> Admin Dashboard
                 </button>
             </div>
@@ -45,7 +45,7 @@
             <div class="user-display" id="user-email-display"></div>
         </header>
 
-        <div id="admin-view" class="view-panel">
+        <div id="admin-view" class="view-panel" style="display: none;">
             <div class="stats-row">
                 <div class="card stat-card">
                     <h3>Total Visitors</h3>
@@ -64,7 +64,7 @@
             </div>
 
             <div class="card table-container">
-                <div class="table-header">
+                <div class="table-header-box">
                     <h3>Visitor Log Database</h3>
                     <div class="table-filters">
                         <input type="date" id="filter-date" onchange="loadLogs()">
@@ -73,11 +73,6 @@
                             <option value="CICS">CICS</option>
                             <option value="CAS">CAS</option>
                             <option value="COE">COE</option>
-                        </select>
-                        <select id="filter-reason" onchange="loadLogs()">
-                            <option value="All">All Reasons</option>
-                            <option value="Research">Research</option>
-                            <option value="Study">Self Study</option>
                         </select>
                     </div>
                 </div>
@@ -104,7 +99,6 @@
                     <select id="user-type">
                         <option value="Student">Student</option>
                         <option value="Teacher">Teacher (Employee)</option>
-                        <option value="Staff">Staff (Employee)</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -112,7 +106,6 @@
                     <select id="college">
                         <option value="CICS">CICS (Computing Studies)</option>
                         <option value="CAS">CAS (Arts and Sciences)</option>
-                        <option value="COE">COE (Engineering)</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -120,7 +113,6 @@
                     <select id="reason">
                         <option value="Research">Research</option>
                         <option value="Study">Self Study</option>
-                        <option value="Borrow">Borrow Books</option>
                     </select>
                 </div>
                 <button onclick="submitEntry()" class="submit-btn">Submit Visitor Log</button>
