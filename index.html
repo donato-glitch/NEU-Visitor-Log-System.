@@ -10,9 +10,9 @@
 <body>
 
 <div class="container">
-    <div class="card">
+    <div class="main-card">
         <div id="auth-section">
-            <h1>New Era University</h1>
+            <h1 style="color: #0047ab;">New Era University</h1>
             <p>Library Visitor Log System</p>
             <button id="login-btn" class="btn-google">
                 <img src="https://www.google.com/favicon.ico" width="18"> Login with Google
@@ -20,75 +20,92 @@
         </div>
 
         <div id="user-section" style="display: none;">
-            <h2 id="greeting">Welcome to NEU Library!</h2>
-
-            <div id="admin-controls" class="admin-controls" style="display: none;">
-                <span class="label">ADMIN PANEL</span>
-                <div class="role-btns">
-                    <button id="user-view-btn" onclick="toggleRole('user')" class="active">Kiosk View</button>
-                    <button id="admin-view-btn" onclick="toggleRole('admin')">Dashboard</button>
+            <div class="dashboard-header">
+                <h2 id="greeting">Welcome to NEU Library!</h2>
+                
+                <div id="admin-controls" style="display: none;" class="admin-panel-box">
+                    <small>ADMIN CONTROLS</small>
+                    <div class="role-switcher">
+                        <button id="user-view-btn" onclick="toggleRole('user')" class="active">Kiosk View</button>
+                        <button id="admin-view-btn" onclick="toggleRole('admin')">Admin Stats</button>
+                    </div>
                 </div>
             </div>
 
             <div id="visitor-form-container">
-                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Please select your details:</p>
-                <select id="user-type">
-                    <option value="Student">Student</option>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Staff">Staff</option>
-                </select>
-                <select id="college">
-                    <option value="CICS">CICS (Computing Studies)</option>
-                    <option value="CAS">CAS (Arts and Sciences)</option>
-                    <option value="COE">COE (Engineering)</option>
-                    <option value="CBA">CBA (Business Admin)</option>
-                </select>
-                <select id="reason">
-                    <option value="Research">Research</option>
-                    <option value="Study">Self Study</option>
-                    <option value="Borrow">Borrow Books</option>
-                    <option value="Return">Return Books</option>
-                </select>
-                <button onclick="submitLog()" class="btn-submit">Submit Visitor Log</button>
+                <div class="form-card">
+                    <label>Visitor Type</label>
+                    <select id="user-type">
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher (Employee)</option>
+                        <option value="Staff">Staff (Employee)</option>
+                    </select>
+                    
+                    <label>College</label>
+                    <select id="college">
+                        <option value="CICS">CICS (Computing Studies)</option>
+                        <option value="CAS">CAS (Arts and Sciences)</option>
+                        <option value="COE">COE (Engineering)</option>
+                        <option value="CBA">CBA (Business Admin)</option>
+                    </select>
+
+                    <label>Reason for Visit</label>
+                    <select id="reason">
+                        <option value="Research">Research</option>
+                        <option value="Study">Self Study</option>
+                        <option value="Borrow">Borrow Books</option>
+                    </select>
+                    
+                    <button onclick="submitLog()" class="btn-submit">Submit Visitor Log</button>
+                </div>
             </div>
 
             <div id="admin-view" style="display: none;">
-                <div class="chart-section">
-                    <p style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Total Library Logs</p>
-                    <div class="circle-container">
-                        <b id="total-circle">0</b>
-                        <small>Visitors</small>
+                <div class="dashboard-grid">
+                    <div class="dash-card chart-card">
+                        <h4>Total Visitors</h4>
+                        <div class="circle-chart">
+                            <span id="total-circle">0</span>
+                        </div>
+                        <p><small>Total Recorded Logs</small></p>
                     </div>
-                    <div class="filter-row" style="margin-top: 15px;">
-                         <input type="date" id="filter-date" onchange="updateStats()">
-                         <select id="filter-reason" onchange="updateStats()">
-                            <option value="All">All Reasons</option>
-                            <option value="Research">Research</option>
-                            <option value="Study">Study</option>
-                            <option value="Borrow">Borrow</option>
-                        </select>
+
+                    <div class="dash-column">
+                        <div class="dash-card">
+                            <h4>🍔 Menu</h4>
+                            <button class="menu-item">📚 Books Database</button>
+                            <button class="menu-item">👤 Member List</button>
+                        </div>
+                        <div class="dash-card">
+                            <h4>⚡ Quick Actions</h4>
+                            <button class="action-btn">+ Add Record</button>
+                            <button class="action-btn">+ Generate Report</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="stat-card">
-                        <h4>🍔 Menu</h4>
-                        <button class="quick-btn">📖 Books</button>
-                        <button class="quick-btn">👥 Members</button>
+                <div class="filter-section">
+                    <h4>Advanced Filters</h4>
+                    <div class="filter-grid">
+                        <input type="date" id="filter-date" onchange="updateStats()">
+                        <select id="filter-college" onchange="updateStats()">
+                            <option value="All">All Colleges</option>
+                            <option value="CICS">CICS</option>
+                            <option value="CAS">CAS</option>
+                        </select>
+                        <select id="filter-type" onchange="updateStats()">
+                            <option value="All">All Roles</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Employee</option>
+                        </select>
                     </div>
-                    <div class="stat-card">
-                        <h4>⚡ Quick Actions</h4>
-                        <button class="quick-btn" style="color: #28a745;">+ Add Log</button>
-                        <button class="quick-btn" style="color: #007bff;">+ Export Data</button>
+                    <div class="result-box">
+                        Filtered Result: <b id="filtered-stat">0</b>
                     </div>
-                </div>
-                
-                <div class="stat-item" style="margin-top: 15px; background: #0047ab; color: white; padding: 10px; border-radius: 8px;">
-                    <small>Filtered Result: </small> <b id="filtered-stat">0</b>
                 </div>
             </div>
 
-            <button onclick="logout()" class="signout-btn">Sign Out Account</button>
+            <button onclick="logout()" class="logout-link">Sign Out Account</button>
         </div>
     </div>
 </div>
