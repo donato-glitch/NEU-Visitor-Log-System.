@@ -5,62 +5,65 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                 url('https://neu.edu.ph/main/assets/images/neu_bg.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
-.container { width: 100%; max-width: 420px; padding: 20px; }
+.container { width: 100%; max-width: 450px; padding: 20px; }
 
 .card {
     background: rgba(255, 255, 255, 0.98);
-    padding: 30px;
-    border-radius: 20px;
+    padding: 25px;
+    border-radius: 25px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
-h1 { color: #0047ab; margin: 0; font-size: 24px; }
-h2 { color: #0047ab; font-size: 18px; }
+h1 { color: #0047ab; margin: 0; font-size: 22px; }
+h2 { color: #333; font-size: 18px; margin-top: 10px; }
 
 .btn-google {
     background: white; border: 1px solid #ddd; padding: 12px;
-    border-radius: 8px; cursor: pointer; display: flex;
+    border-radius: 10px; cursor: pointer; display: flex;
     align-items: center; justify-content: center; gap: 10px;
     width: 100%; font-weight: bold; margin-top: 20px;
 }
 
 .btn-submit {
     background: #0047ab; color: white; border: none; padding: 15px;
-    width: 100%; border-radius: 8px; font-weight: bold; margin-top: 10px;
+    width: 100%; border-radius: 10px; font-weight: bold; margin-top: 15px;
     cursor: pointer;
 }
 
 select, input {
-    width: 100%; padding: 10px; margin: 5px 0;
-    border-radius: 6px; border: 1px solid #ccc; font-size: 13px;
+    width: 100%; padding: 12px; margin: 6px 0;
+    border-radius: 8px; border: 1px solid #ddd; font-size: 14px;
+    box-sizing: border-box;
 }
 
-.admin-controls {
-    background: #f0f4f8; padding: 12px; border-radius: 10px; margin-bottom: 15px;
-}
-
-.label { font-size: 10px; font-weight: bold; color: #0047ab; display: block; margin-bottom: 8px; }
-
-.role-btns { display: flex; gap: 5px; justify-content: center; }
+/* ADMIN DASHBOARD STYLES */
+.admin-controls { background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 20px; }
+.label { font-size: 11px; font-weight: bold; color: #0047ab; display: block; margin-bottom: 10px; }
+.role-btns { display: flex; gap: 8px; justify-content: center; }
 .role-btns button { 
-    padding: 6px 10px; cursor: pointer; border-radius: 5px; 
+    padding: 8px 15px; cursor: pointer; border-radius: 8px; 
     border: 1px solid #0047ab; background: white; color: #0047ab; font-size: 12px;
 }
 .role-btns button.active { background: #0047ab; color: white; }
 
-/* FILTERS LAYOUT */
-.filters-container { margin-bottom: 15px; }
+.chart-section { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.circle-container {
+    width: 110px; height: 110px; border-radius: 50%;
+    border: 8px solid #f0f0f0; border-top: 8px solid #0047ab;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 10px auto;
+}
+.circle-container b { font-size: 26px; color: #0047ab; }
+
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat-card { background: #f8f9fa; padding: 12px; border-radius: 12px; text-align: left; border-top: 4px solid #0047ab; }
+.stat-card h4 { margin: 0 0 8px 0; font-size: 13px; }
+.quick-btn { width: 100%; padding: 7px; margin-bottom: 5px; border: 1px solid #eee; border-radius: 5px; background: white; font-size: 11px; cursor: pointer; text-align: left; }
+
 .filter-row { display: flex; gap: 5px; }
-
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.stat-item { background: #0047ab; color: white; padding: 12px; border-radius: 8px; }
-.stat-item b { font-size: 20px; }
-
-.signout-btn { margin-top: 15px; background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; font-size: 11px; }
+.signout-btn { margin-top: 20px; background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; font-size: 12px; }
