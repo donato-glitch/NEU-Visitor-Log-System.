@@ -14,7 +14,10 @@ async function checkUser() {
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('user-section').style.display = 'flex';
         if (ADMIN_EMAILS.includes(session.user.email.toLowerCase())) {
-            document.getElementById('admin-controls').style.display = 'block';
+            document.getElementById('admin-nav').style.display = 'block';
+            toggleRole('admin');
+        } else {
+            toggleRole('user');
         }
     }
 }
@@ -23,13 +26,10 @@ async function updateStats() {
     let { data } = await _supabase.from('attendance').select('*').order('created_at', { ascending: false });
     if (data) {
         document.getElementById('total-circle').innerText = data.length;
-        
-        // RENDER TABLE ROWS (Pangalan ng nag log)
-        const logBody = document.getElementById('log-body');
-        logBody.innerHTML = data.map(log => `
+        document.getElementById('log-body').innerHTML = data.map(log => `
             <tr>
-                <td>${log.full_name}</td>
-                <td>${log.college}</td>
+                <td><strong>${log.full_name}</strong></td>
+                <td><span class="badge">${log.college}</span></td>
                 <td>${log.reason}</td>
                 <td>${new Date(log.created_at).toLocaleTimeString()}</td>
             </tr>
@@ -38,12 +38,12 @@ async function updateStats() {
 }
 
 function toggleRole(role) {
-    const isMain = role === 'user';
-    document.getElementById('visitor-form-container').style.display = isMain ? 'block' : 'none';
-    document.getElementById('admin-view').style.display = isMain ? 'none' : 'grid';
-    document.getElementById('user-view-btn').className = isMain ? 'active' : '';
-    document.getElementById('admin-view-btn').className = isMain ? '' : 'active';
-    if(!isMain) updateStats();
+    const isAdmin = role === 'admin';
+    document.getElementById('admin-view').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('visitor-form-container').style.display = isAdmin ? 'none' : 'block';
+    document.getElementById('admin-tab').className = isAdmin ? 'active' : '';
+    document.getElementById('user-tab').className = isAdmin ? '' : 'active';
+    if(isAdmin) updateStats();
 }
 
 async function submitLog() {
@@ -55,7 +55,8 @@ async function submitLog() {
         college: document.getElementById('college').value,
         reason: document.getElementById('reason').value
     }]);
-    alert("Entry Recorded!");
+    alert("Visit recorded successfully!");
+    updateStats();
 }
 
 async function logout() { await _supabase.auth.signOut(); window.location.reload(); }
