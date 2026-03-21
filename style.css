@@ -1,92 +1,35 @@
-const supabaseUrl = 'https://nkskdibhsqyxgirotoly.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rc2tkaWJoc3F5eGdpcm90b2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYxNDQsImV4cCI6MjA4OTMzMjE0NH0.yq3jFykJN4EVgIJ1gTpf1ue2tq1zNz6keVCBcLxSAwc';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background-color: #87CEEB; }
 
-const ADMINS = ['donatojayr31@gmail.com', 'eduardo.donato@neu.edu.ph', 'jcesperanza@neu.edu.ph'];
-let isViewingAdmin = true;
+#auth-section { height: 100vh; display: flex; justify-content: center; align-items: center; background: white; }
+.login-container { text-align: center; }
+.google-btn { padding: 15px 30px; background: #0078d7; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
 
-async function login() {
-    await _supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.origin + window.location.pathname }
-    });
-}
+.main-header { background: #0078d7; color: white; padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; }
+.main-header h1 { font-size: 2.8rem; }
 
-async function checkSession() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    if (session) {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        const userEmail = session.user.email.toLowerCase();
-        document.getElementById('user-status').innerText = `User: ${userEmail}`;
-        if (ADMINS.includes(userEmail)) {
-            document.getElementById('role-switch-btn').style.display = 'block';
-            showView('admin');
-        } else {
-            showView('kiosk');
-        }
-    }
-}
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px 40px; }
+.stat-card { background: white; padding: 20px; display: flex; align-items: center; gap: 20px; border-left: 8px solid #00aba9; }
+.stat-card h3 { font-size: 2.2rem; color: #333; }
 
-function toggleRole() {
-    isViewingAdmin = !isViewingAdmin;
-    showView(isViewingAdmin ? 'admin' : 'kiosk');
-}
+.button-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 40px; height: 180px; }
+.big-btn { display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; cursor: pointer; font-weight: bold; gap: 10px; }
+.bg-blue { background: #0078d7; }
+.bg-teal { background: #00aba9; }
+.bg-red { background: #d11a2a; }
 
-function showView(view) {
-    document.getElementById('admin-view').style.display = (view === 'admin') ? 'block' : 'none';
-    document.getElementById('kiosk-view').style.display = (view === 'kiosk') ? 'block' : 'none';
-    const isUserAdmin = ADMINS.some(email => document.getElementById('user-status').innerText.includes(email));
-    document.getElementById('back-to-admin-btn').style.display = (isUserAdmin && view === 'kiosk') ? 'block' : 'none';
-    if(view === 'admin') loadAdminLogs();
-}
+.table-section { margin: 20px 40px; background: white; }
+.table-header { background: #0078d7; color: white; padding: 12px; font-weight: bold; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+th { background: #f5f5f5; color: #333; font-size: 0.9rem; }
 
-async function loadAdminLogs() {
-    const range = document.getElementById('date-range').value;
-    const type = document.getElementById('visitor-type').value;
-    let query = _supabase.from('attendance').select('*');
-    if (range === 'today') {
-        query = query.gte('logged_at', new Date().toISOString().split('T')[0]);
-    } else if (range === 'week') {
-        const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
-        query = query.gte('logged_at', weekAgo.toISOString());
-    }
-    if (type !== 'all') query = query.eq('user_type', type);
-    const { data } = await query.order('logged_at', { ascending: false });
-    if (data) {
-        document.getElementById('stat-total').innerText = data.length;
-        document.getElementById('stat-students').innerText = data.filter(d => d.user_type === 'Student').length;
-        document.getElementById('stat-employees').innerText = data.filter(d => d.user_type === 'Employee').length;
-        document.getElementById('admin-log-data').innerHTML = data.map(log => `<tr><td><strong>${log.full_name}</strong></td><td>${log.user_type || 'Student'}</td><td>${log.college}</td><td>${log.reason}</td><td>${new Date(log.logged_at).toLocaleDateString()}</td></tr>`).join('');
-    }
-}
+.form-card { max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-top: 10px solid #0078d7; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; }
+.submit-btn { width: 100%; padding: 15px; background: #0078d7; color: white; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+.back-btn { width: 100%; padding: 10px; background: #eee; border: none; cursor: pointer; }
 
-async function submitLog() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    const entry = {
-        full_name: session.user.user_metadata.full_name,
-        email: session.user.email,
-        user_type: document.getElementById('user_type').value,
-        college: document.getElementById('college').value,
-        reason: document.getElementById('reason').value
-    };
-    const { error } = await _supabase.from('attendance').insert([entry]);
-    if (!error) {
-        alert("Entry Recorded!");
-        if (ADMINS.includes(session.user.email.toLowerCase())) showView('admin');
-        else logout();
-    }
-}
-
-function clearForm() {
-    document.getElementById('college').selectedIndex = 0;
-    document.getElementById('reason').selectedIndex = 0;
-}
-
-async function logout() {
-    await _supabase.auth.signOut();
-    window.location.reload();
-}
-
-setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-checkSession();
+.bottom-bar { position: fixed; bottom: 0; width: 100%; background: #333; color: white; padding: 8px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.switch-btn { background: #ffaa00; border: none; padding: 5px 10px; cursor: pointer; font-weight: bold; }
