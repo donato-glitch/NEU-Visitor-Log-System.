@@ -1,126 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEU Library Visitor Log</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-
-<div id="auth-section">
-    <div class="login-card">
-        <h1 class="brand-title">User Login</h1>
-        <p class="sub-text">Please sign in with your NEU Google Account to access the Visitor Log System.</p>
-        <button id="login-btn" class="google-btn">
-            <img src="https://www.google.com/favicon.ico" width="20"> Continue with Google
-        </button>
-        <div class="login-footer">New Era University © 2026</div>
+<div id="admin-view" class="metro-dashboard" style="display: none;">
+    <div class="metro-header">
+        <h1>NEU Library Visitor Log System</h1>
+        <p>Logged in as: <span id="admin-email-label">eduardo.donato@neu.edu.ph</span></p>
     </div>
-</div>
 
-<div id="user-section" style="display: none;" class="app-wrapper">
-    <aside class="sidebar">
-        <div class="sidebar-logo">NEU Library</div>
-        <nav>
-            <div id="admin-nav" style="display: none;">
-                <p class="menu-label">Management</p>
-                <button onclick="toggleView('admin')" id="admin-tab" class="nav-item">
-                    <i class="fas fa-chart-line"></i> Admin Dashboard
-                </button>
-            </div>
-            <p class="menu-label">Entry</p>
-            <button onclick="toggleView('user')" id="user-tab" class="nav-item">
-                <i class="fas fa-edit"></i> Kiosk Mode
-            </button>
-        </nav>
-        <button onclick="logout()" class="logout-link">Sign Out</button>
-    </aside>
-
-    <main class="content-area">
-        <header>
-            <h2 id="welcome-text">Welcome to NEU Library!</h2>
-            <div class="user-display" id="user-email-display"></div>
-        </header>
-
-        <div id="admin-view" class="view-panel" style="display: none;">
-            <div class="stats-row">
-                <div class="card stat-card">
-                    <h3>Total Visitors</h3>
-                    <div class="circle-progress"><span id="visitor-count">0</span></div>
-                </div>
-                <div class="card menu-card">
-                    <h3>Menu</h3>
-                    <button class="list-btn"><i class="fas fa-book"></i> Books</button>
-                    <button class="list-btn"><i class="fas fa-users"></i> Members</button>
-                </div>
-                <div class="card action-card">
-                    <h3>Quick Buttons</h3>
-                    <button class="btn-outline">+ Add Book</button>
-                    <button class="btn-outline">+ Add Member</button>
-                </div>
-            </div>
-
-            <div class="card table-container">
-                <div class="table-header-box">
-                    <h3>Visitor Log Database</h3>
-                    <div class="table-filters">
-                        <input type="date" id="filter-date" onchange="loadLogs()">
-                        <select id="filter-college" onchange="loadLogs()">
-                            <option value="All">All Colleges</option>
-                            <option value="CICS">CICS</option>
-                            <option value="CAS">CAS</option>
-                            <option value="COE">COE</option>
-                        </select>
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>College</th>
-                            <th>Reason</th>
-                            <th>Role</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="log-list"></tbody>
-                </table>
-            </div>
+    <div class="tile-grid">
+        <div class="tile tile-large bg-blue" onclick="toggleView('user')">
+            <i class="fas fa-edit fa-5x"></i>
+            <span>Open Kiosk Mode</span>
         </div>
 
-        <div id="user-view" class="view-panel" style="display: none;">
-            <div class="card kiosk-form">
-                <h2>Visitor Entry Form</h2>
-                <div class="input-group">
-                    <label>Role</label>
-                    <select id="user-type">
-                        <option value="Student">Student</option>
-                        <option value="Teacher">Teacher (Employee)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>College</label>
-                    <select id="college">
-                        <option value="CICS">CICS (Computing Studies)</option>
-                        <option value="CAS">CAS (Arts and Sciences)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Reason</label>
-                    <select id="reason">
-                        <option value="Research">Research</option>
-                        <option value="Study">Self Study</option>
-                    </select>
-                </div>
-                <button onclick="submitEntry()" class="submit-btn">Submit Visitor Log</button>
-            </div>
+        <div class="tile bg-teal" onclick="loadLogs()">
+            <i class="fas fa-sync fa-3x"></i>
+            <span>Refresh Logs</span>
         </div>
-    </main>
-</div>
 
-<script src="script.js"></script>
-</body>
-</html>
+        <div class="tile bg-orange">
+            <i class="fas fa-file-export fa-3x"></i>
+            <span>Export Reports</span>
+        </div>
+
+        <div class="tile bg-red" onclick="logout()">
+            <i class="fas fa-power-off fa-3x"></i>
+            <span>Logout</span>
+        </div>
+
+        <div class="tile bg-purple">
+            <i class="fas fa-user-plus fa-3x"></i>
+            <span>Add New Admin</span>
+        </div>
+
+        <div class="tile bg-green">
+            <i class="fas fa-cog fa-3x"></i>
+            <span>System Settings</span>
+        </div>
+    </div>
+
+    <div class="metro-table-card">
+        <h3>Live Visitor Database</h3>
+        </div>
+</div>
