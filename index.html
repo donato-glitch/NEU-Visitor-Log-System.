@@ -9,104 +9,91 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="auth-section">
-    <div class="login-container">
-        <i class="fas fa-university fa-5x" style="color:#0078d7; margin-bottom:20px;"></i>
-        <h1>NEU Library Login</h1>
+    <div id="auth-section">
+        <i class="fas fa-university fa-5x" style="color:#0078d7;"></i>
+        <h1 style="margin-top:20px;">NEU Library System</h1>
         <button class="google-btn" onclick="login()">Continue with Google</button>
     </div>
-</div>
 
-<div id="main-app" style="display: none;">
-    <header class="main-header">
-        <div class="header-content">
-            <h1>Welcome to NEU Library</h1>
-            <p>Visitor Log System | Midterm Edition</p>
-        </div>
-        <i class="fas fa-university fa-3x"></i>
-    </header>
+    <div id="main-app" style="display: none;">
+        <header class="main-header">
+            <div>
+                <h1>Welcome to NEU Library</h1>
+                <p>Visitor Log System | Midterm Edition</p>
+            </div>
+            <i class="fas fa-university fa-3x"></i>
+        </header>
 
-    <div id="admin-view" class="view-container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fas fa-users fa-2x"></i>
-                <div><h3 id="stat-total">0</h3><p>Total Visitors Today</p></div>
+        <div id="admin-view">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users fa-2x" style="color:#0078d7;"></i>
+                    <div><h3 id="stat-total">0</h3><p>Total Visitors</p></div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-graduate fa-2x" style="color:#00aba9;"></i>
+                    <div><h3 id="stat-students">0</h3><p>Students</p></div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie fa-2x" style="color:#d11a2a;"></i>
+                    <div><h3 id="stat-employees">0</h3><p>Staff/Teachers</p></div>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-user-graduate fa-2x"></i>
-                <div><h3 id="stat-students">0</h3><p>Students</p></div>
+
+            <div class="button-grid">
+                <button class="big-btn bg-blue" onclick="showView('kiosk')"><i class="fas fa-user-plus fa-2x"></i><span>Open Kiosk</span></button>
+                <button class="big-btn bg-teal" onclick="loadAdminLogs()"><i class="fas fa-sync-alt fa-2x"></i><span>Refresh Records</span></button>
+                <button class="big-btn bg-red" onclick="logout()"><i class="fas fa-power-off fa-2x"></i><span>Logout</span></button>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-user-tie fa-2x"></i>
-                <div><h3 id="stat-employees">0</h3><p>Teachers/Staff</p></div>
+
+            <div class="table-section">
+                <div class="table-header"><i class="fas fa-list"></i> Official Visitor Records</div>
+                <table>
+                    <thead><tr><th>Name</th><th>Type</th><th>College</th><th>Reason</th><th>Time</th></tr></thead>
+                    <tbody id="admin-log-data"></tbody>
+                </table>
             </div>
         </div>
 
-        <div class="button-grid">
-            <div class="big-btn bg-blue" onclick="showView('kiosk')">
-                <i class="fas fa-user-plus fa-2x"></i>
-                <span>Open Visitor Kiosk</span>
-            </div>
-            <div class="big-btn bg-teal" onclick="loadAdminLogs()">
-                <i class="fas fa-sync-alt fa-2x"></i>
-                <span>Refresh Logs</span>
-            </div>
-            <div class="big-btn bg-red" onclick="logout()">
-                <i class="fas fa-power-off fa-2x"></i>
-                <span>Logout</span>
+        <div id="kiosk-view" style="display:none; padding-bottom: 100px;">
+            <div class="form-card">
+                <h2>Visitor Entry Form</h2>
+                <div class="form-group">
+                    <label>Classification:</label>
+                    <select id="user_type">
+                        <option value="Student">Student</option>
+                        <option value="Employee">Employee (Teacher/Staff)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>College/Dept:</label>
+                    <select id="college">
+                        <option value="CICS">CICS</option>
+                        <option value="CAS">CAS</option>
+                        <option value="COE">COE</option>
+                        <option value="CON">CON</option>
+                        <option value="STAFF">University Office</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason:</label>
+                    <select id="reason">
+                        <option value="Self Study">Self Study</option>
+                        <option value="Research">Research</option>
+                        <option value="Borrow/Return">Borrow/Return</option>
+                    </select>
+                </div>
+                <button onclick="submitLog()" class="submit-btn">SUBMIT LOG</button>
+                <button onclick="showView('admin')" style="width:100%; padding:10px; background:#eee; border:none; cursor:pointer;">Back to Dashboard</button>
             </div>
         </div>
 
-        <div class="table-section">
-            <div class="table-header"><i class="fas fa-database"></i> OFFICIAL VISITOR RECORDS</div>
-            <table>
-                <thead>
-                    <tr><th>Visitor Name</th><th>Type</th><th>College/Dept</th><th>Reason</th><th>Time</th></tr>
-                </thead>
-                <tbody id="admin-log-data"></tbody>
-            </table>
-        </div>
+        <footer class="bottom-bar">
+            <span id="user-status">User: ...</span>
+            <button id="role-switch-btn" onclick="toggleRole()" style="display:none;" class="switch-btn">Switch Role</button>
+            <span id="clock">00:00:00</span>
+        </footer>
     </div>
-
-    <div id="kiosk-view" class="view-container" style="display:none; padding: 20px;">
-        <div class="form-card">
-            <h2>Visitor Entry Form</h2>
-            <div class="form-group">
-                <label>I am a/an:</label>
-                <select id="user_type">
-                    <option value="Student">Student</option>
-                    <option value="Employee">Employee (Teacher/Staff)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>College/Department</label>
-                <select id="college">
-                    <option value="CICS">CICS</option>
-                    <option value="CAS">CAS</option>
-                    <option value="COE">COE</option>
-                    <option value="CON">CON</option>
-                    <option value="STAFF">University Office</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Reason for Visit</label>
-                <select id="reason">
-                    <option value="Self Study">Self Study</option>
-                    <option value="Research">Research</option>
-                    <option value="Borrow/Return">Borrow/Return</option>
-                </select>
-            </div>
-            <button onclick="submitLog()" class="submit-btn">SUBMIT ENTRY</button>
-            <button onclick="showView('admin')" class="back-btn">Back to Dashboard</button>
-        </div>
-    </div>
-
-    <footer class="bottom-bar">
-        <span id="user-status">Logged in: ...</span>
-        <button id="role-switch-btn" onclick="toggleRole()" style="display:none;" class="switch-btn">Switch Role</button>
-        <span id="clock">00:00:00</span>
-    </footer>
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
