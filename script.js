@@ -4,9 +4,9 @@ const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 
 const ADMINS = [
-    'jcesperanza@neu.edu.ph', 
-    'eduardo.donato@neu.edu.ph', 
-    
+   
+    'eduardo.donato@neu.edu.ph',
+    'jcesperanza@neu.edu.ph'
 ];
 
 async function login() {
@@ -23,7 +23,7 @@ async function checkSession() {
         document.getElementById('main-app').style.display = 'block';
         document.getElementById('user-status').innerText = `Logged in as: ${session.user.email}`;
 
-        // Redirect based on role
+       
         if (ADMINS.includes(session.user.email.toLowerCase())) {
             showView('admin');
         } else {
@@ -42,17 +42,25 @@ async function loadAdminLogs() {
     const { data, error } = await _supabase
         .from('attendance')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('logged_at', { ascending: false }); 
 
-    if (data) {
-        document.getElementById('admin-log-data').innerHTML = data.map(log => `
+    if (error) {
+        console.error("Error:", error.message);
+        return;
+    }
+
+    const tableBody = document.getElementById('admin-log-data');
+    if (data && data.length > 0) {
+        tableBody.innerHTML = data.map(log => `
             <tr>
-                <td><strong>${log.full_name}</strong></td>
-                <td>${log.college}</td>
-                <td>${log.reason}</td>
-                <td>${new Date(log.created_at).toLocaleTimeString()}</td>
+                <td><strong>${log.full_name || 'No Name'}</strong></td>
+                <td>${log.college || 'N/A'}</td>
+                <td>${log.reason || 'N/A'}</td>
+                <td>${log.logged_at ? new Date(log.logged_at).toLocaleTimeString() : 'N/A'}</td>
             </tr>
         `).join('');
+    } else {
+        tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No records found.</td></tr>`;
     }
 }
 
@@ -66,8 +74,10 @@ async function submitLog() {
     }]);
 
     if (!error) {
-        alert("Success! Your visit has been logged.");
+        alert("Visitor log submitted successfully!");
         window.location.reload();
+    } else {
+        alert("Error submitting: " + error.message);
     }
 }
 
