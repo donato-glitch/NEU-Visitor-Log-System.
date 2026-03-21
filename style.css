@@ -1,93 +1,43 @@
-const supabaseUrl = 'https://nkskdibhsqyxgirotoly.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rc2tkaWJoc3F5eGdpcm90b2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYxNDQsImV4cCI6MjA4OTMzMjE0NH0.yq3jFykJN4EVgIJ1gTpf1ue2tq1zNz6keVCBcLxSAwc';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-// LISTAHAN NG ADMINS (Ilagay dito ang email ni Prof)
-const ADMINS = [
-    'donatojayr31@gmail.com', 
-    'eduardo.donato@neu.edu.ph',
-    'jcesperanza@neu.edu.ph'
-];
+#auth-section { height: 100vh; display: flex; }
+.split-container { display: flex; width: 100%; }
+.login-side { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+.student-side { background: #ffffff; color: #333; }
+.admin-side { background: #0056b3; color: #ffffff; }
 
-async function login() {
-    await _supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.origin + window.location.pathname }
-    });
+.google-btn { 
+    background: white; border: 1px solid #ddd; padding: 15px 30px; 
+    border-radius: 30px; cursor: pointer; display: flex; align-items: center; 
+    gap: 10px; font-weight: bold; margin-top: 20px; transition: 0.2s;
 }
+.admin-g-btn { color: #0056b3; }
+.google-btn img { width: 20px; }
+.google-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-async function checkSession() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    if (session) {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        document.getElementById('user-status').innerText = `Logged in as: ${session.user.email}`;
+.metro-wrapper { background: #87ceeb; min-height: 100vh; padding-bottom: 50px; }
+.metro-header { background: #0078d7; color: white; padding: 30px; display: flex; justify-content: space-between; border-bottom: 5px solid white; }
 
-        // Kung Admin, ipakita ang Admin View. Kung hindi, Kiosk View.
-        if (ADMINS.includes(session.user.email.toLowerCase())) {
-            showView('admin');
-        } else {
-            showView('kiosk');
-        }
-    }
-}
+.tile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 20px; max-width: 1100px; margin: 0 auto; }
+.tile { background: #00a2ed; color: white; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
+.tile:hover { outline: 3px solid white; }
+.tile-double { grid-column: span 2; }
 
-function showView(view) {
-    document.getElementById('admin-view').style.display = (view === 'admin') ? 'block' : 'none';
-    document.getElementById('kiosk-view').style.display = (view === 'kiosk') ? 'block' : 'none';
-    if(view === 'admin') loadAdminLogs();
-}
+.bg-blue { background: #0078d7; }
+.bg-teal { background: #00aba9; }
+.bg-red { background: #b91d47; }
 
-async function loadAdminLogs() {
-    const { data, error } = await _supabase
-        .from('attendance')
-        .select('*')
-        .order('logged_at', { ascending: false }); // Gamit ang logged_at base sa Supabase mo
+.metro-table-card { max-width: 1100px; margin: 20px auto; background: white; border: 2px solid #0078d7; }
+.table-header { background: #0078d7; color: white; padding: 10px; font-weight: bold; }
+.table-scroll { max-height: 400px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { background: #f2f2f2; padding: 12px; text-align: left; border-bottom: 2px solid #ddd; }
+td { padding: 12px; border-bottom: 1px solid #eee; }
 
-    if (error) {
-        console.error("Error:", error.message);
-        return;
-    }
+.form-card { max-width: 450px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; }
+.submit-btn { width: 100%; padding: 15px; background: #0078d7; color: white; border: none; font-weight: bold; cursor: pointer; }
 
-    const tableBody = document.getElementById('admin-log-data');
-    if (data && data.length > 0) {
-        tableBody.innerHTML = data.map(log => `
-            <tr>
-                <td><strong>${log.full_name || 'No Name'}</strong></td>
-                <td>${log.college || 'N/A'}</td>
-                <td>${log.reason || 'N/A'}</td>
-                <td>${log.logged_at ? new Date(log.logged_at).toLocaleTimeString() : 'N/A'}</td>
-            </tr>
-        `).join('');
-    } else {
-        tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No records found.</td></tr>`;
-    }
-}
-
-async function submitLog() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    const { error } = await _supabase.from('attendance').insert([{
-        full_name: session.user.user_metadata.full_name,
-        email: session.user.email,
-        college: document.getElementById('college').value,
-        reason: document.getElementById('reason').value
-    }]);
-
-    if (!error) {
-        alert("Visitor log submitted successfully!");
-        window.location.reload();
-    } else {
-        alert("Error submitting: " + error.message);
-    }
-}
-
-async function logout() {
-    await _supabase.auth.signOut();
-    window.location.href = window.location.origin + window.location.pathname;
-}
-
-setInterval(() => {
-    document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-}, 1000);
-
-checkSession();
+.metro-footer { position: fixed; bottom: 0; width: 100%; background: #333; color: white; padding: 5px 20px; display: flex; justify-content: space-between; font-size: 12px; }
