@@ -3,7 +3,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 const ADMINS = [
-    'donatojayr31@gmail.com', 
+     
     'eduardo.donato@neu.edu.ph',
     'jcesperanza@neu.edu.ph'
 ];
