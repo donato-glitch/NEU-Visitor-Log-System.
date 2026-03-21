@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Visitor Log System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
 
+<div id="auth-section">
+    <div class="split-container">
+        <div class="login-side student-side">
+            <i class="fas fa-user-graduate fa-5x"></i>
+            <h2>Student Login</h2>
+            <p>Access the Visitor Kiosk</p>
+            <button class="google-btn" onclick="login()">
+                <img src="https://www.google.com/favicon.ico"> Continue with Google
+            </button>
+        </div>
+        <div class="login-side admin-side">
+            <i class="fas fa-user-shield fa-5x"></i>
+            <h2>Admin Login</h2>
+            <p>Access Admin Dashboard & Logs</p>
+            <button class="google-btn admin-g-btn" onclick="login()">
+                <img src="https://www.google.com/favicon.ico"> Login as Admin
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="main-app" style="display: none;">
+    <div class="metro-wrapper">
+        <header class="metro-header">
+            <div class="header-left">
+                <h1>NEU Visitor Log System</h1>
+                <span>University Library | Version 1.0.4</span>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-university fa-3x"></i>
+            </div>
+        </header>
+
+        <div id="admin-view" class="view-container" style="display: none;">
+            <div class="tile-grid">
+                <div class="tile tile-double bg-blue" onclick="showView('kiosk')">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Open Visitor Kiosk</span>
+                </div>
+                <div class="tile bg-teal" onclick="loadAdminLogs()">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh Logs</span>
+                </div>
+                <div class="tile bg-red" onclick="logout()">
+                    <i class="fas fa-power-off"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+
+            <div class="metro-table-card">
+                <div class="table-header">
+                    <i class="fas fa-database"></i> OFFICIAL VISITOR RECORDS
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>VISITOR NAME</th>
+                                <th>COLLEGE/DEPT</th>
+                                <th>REASON</th>
+                                <th>TIME LOGGED</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-log-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="kiosk-view" class="view-container" style="display: none;">
+            <div class="form-card">
+                <h2>Visitor Entry Form</h2>
+                <div class="form-group">
+                    <label>College</label>
+                    <select id="college">
+                        <option value="">Select College</option>
+                        <option value="CICS">CICS</option>
+                        <option value="CAS">CAS</option>
+                        <option value="COE">COE</option>
+                        <option value="CON">CON</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason for Visit</label>
+                    <select id="reason">
+                        <option value="">Select Reason</option>
+                        <option value="Self Study">Self Study</option>
+                        <option value="Research">Research</option>
+                        <option value="Borrow/Return Book">Borrow/Return Book</option>
+                    </select>
+                </div>
+                <button onclick="submitLog()" class="submit-btn">SUBMIT ENTRY</button>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button onclick="clearForm()" style="flex: 1; padding: 10px; background: #f0f0f0; border: 1px solid #ccc; cursor: pointer; border-radius: 4px;">
+                        <i class="fas fa-eraser"></i> Clear Form
+                    </button>
+                    <button id="kiosk-logout-btn" onclick="logout()" style="flex: 1; padding: 10px; background: #ff4444; color: white; border: none; cursor: pointer; border-radius: 4px;">
+                        <i class="fas fa-power-off"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="metro-footer">
+            <span id="user-status">Account: ...</span>
+            <span id="clock">00:00:00</span>
+        </footer>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
