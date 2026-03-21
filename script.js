@@ -49,6 +49,7 @@ async function loadAdminLogs() {
         .order('logged_at', { ascending: false });
     
     if (data) {
+        document.getElementById('total-count').innerText = data.length;
         document.getElementById('admin-log-data').innerHTML = data.map(log => `
             <tr>
                 <td><strong>${log.full_name || 'Anonymous'}</strong></td>
