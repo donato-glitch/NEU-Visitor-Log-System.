@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Library Visitor Log System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
 
+<div id="auth-section">
+    <div class="split-container">
+        <div class="login-side student-side">
+            <i class="fas fa-user-graduate fa-5x"></i>
+            <h2>Student Login</h2>
+            <p>Access the Visitor Kiosk</p>
+            <button class="google-btn" onclick="login()">
+                <img src="https://www.google.com/favicon.ico"> Continue with Google
+            </button>
+        </div>
+        <div class="login-side admin-side">
+            <i class="fas fa-user-shield fa-5x"></i>
+            <h2>Admin Login</h2>
+            <p>Library Management Access</p>
+            <button class="google-btn admin-g-btn" onclick="login()">
+                <img src="https://www.google.com/favicon.ico"> Login as Admin
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="main-app" style="display: none;">
+    <div class="metro-wrapper">
+        <header class="metro-header">
+            <div class="header-left">
+                <h1>Welcome to NEU Library</h1>
+                <span>Visitor Log System | Version 1.0.3</span>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-university fa-3x"></i>
+            </div>
+        </header>
+
+        <div id="admin-view" class="view-container" style="display: none;">
+            <div class="tile-grid">
+                <div class="tile tile-double bg-blue" onclick="showView('kiosk')">
+                    <i class="fas fa-edit"></i>
+                    <span>Visitor Entry Form</span>
+                </div>
+                <div class="tile bg-teal" onclick="loadAdminLogs()">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh Logs</span>
+                </div>
+                <div class="tile bg-red" onclick="logout()">
+                    <i class="fas fa-power-off"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+
+            <div class="metro-table-card">
+                <div class="table-header">
+                    <i class="fas fa-list"></i> LIVE VISITOR DATABASE
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>COLLEGE</th>
+                                <th>REASON</th>
+                                <th>TIME IN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-log-data">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="kiosk-view" class="view-container" style="display: none;">
+            <div class="form-card">
+                <h2>Visitor Entry Form</h2>
+                <div class="form-group">
+                    <label>College</label>
+                    <select id="college">
+                        <option>CICS</option>
+                        <option>CAS</option>
+                        <option>COE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <select id="reason">
+                        <option>Self Study</option>
+                        <option>Research</option>
+                        <option>Borrow Book</option>
+                    </select>
+                </div>
+                <button onclick="submitLog()" class="submit-btn">SUBMIT ENTRY</button>
+            </div>
+        </div>
+
+        <footer class="metro-footer">
+            <span id="user-status">Logged in: ...</span>
+            <span id="clock">00:00:00</span>
+        </footer>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
