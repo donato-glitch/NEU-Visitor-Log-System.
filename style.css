@@ -42,4 +42,15 @@
 .table-header { background: #0078d7; color: white; padding: 10px; font-weight: bold; font-size: 14px; }
 .table-scroll { max-height: 300px; overflow-y: auto; }
 table { width: 100%; border-collapse: collapse; }
-th { background: #f2f2f2; padding: 12px; text-align: left; font-size:
+th { background: #f2f2f2; padding: 12px; text-align: left; font-size: 12px; border-bottom: 2px solid #ddd; }
+td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+
+/* KIOSK FORM */
+.metro-form-card { max-width: 500px; margin: 50px auto; background: white; padding: 30px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group select, .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; }
+.submit-btn { width: 100%; padding: 15px; background: #0078d7; color: white; border: none; font-weight: bold; cursor: pointer; }
+
+/* FOOTER */
+.metro-footer { position: fixed; bottom: 0; width: 100%; background: #333; color: white; padding: 5px 20px; display: flex; justify-content: space-between; font-size: 12px; }
