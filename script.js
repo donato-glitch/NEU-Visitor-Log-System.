@@ -25,10 +25,16 @@ async function checkSession() {
         document.getElementById('main-app').style.display = 'block';
         const userEmail = session.user.email.toLowerCase();
         document.getElementById('user-status').innerText = `User: ${userEmail}`;
+        
+        const backBtn = document.querySelector('button[onclick="showView(\'admin\')"]');
+
         if (ADMINS.includes(userEmail)) {
             document.getElementById('role-switch-btn').style.display = 'block';
+            if(backBtn) backBtn.style.display = 'block';
             showView('admin');
         } else {
+            document.getElementById('role-switch-btn').style.display = 'none';
+            if(backBtn) backBtn.style.display = 'none';
             showView('kiosk');
         }
     }
@@ -106,7 +112,8 @@ async function submitLog() {
     const { error } = await _supabase.from('attendance').insert([entry]);
     if (!error) {
         alert("Successfully Registered!");
-        if (!ADMINS.includes(session.user.email.toLowerCase())) {
+        const userEmail = session.user.email.toLowerCase();
+        if (!ADMINS.includes(userEmail)) {
             logout();
         } else {
             loadAdminLogs();
