@@ -26,36 +26,38 @@
 
         <div id="admin-view">
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card" onclick="loadAdminLogs()" style="cursor: pointer;">
                     <i class="fas fa-users fa-2x" style="color:#0078d7;"></i>
                     <div><h3 id="stat-total">0</h3><p>Total Visitors</p></div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="loadAdminLogs()" style="cursor: pointer;">
                     <i class="fas fa-user-graduate fa-2x" style="color:#00aba9;"></i>
                     <div><h3 id="stat-students">0</h3><p>Students</p></div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="loadAdminLogs()" style="cursor: pointer;">
                     <i class="fas fa-user-tie fa-2x" style="color:#d11a2a;"></i>
                     <div><h3 id="stat-employees">0</h3><p>Staff/Teachers</p></div>
                 </div>
             </div>
 
             <div class="button-grid">
-    <button class="big-btn bg-blue" onclick="showView('kiosk')">
-        <i class="fas fa-user-plus fa-2x"></i>
-        <span>Open Visitor Kiosk</span>
-    </button>
-    
-    <button class="big-btn bg-teal" onclick="loadAdminLogs()">
-        <i class="fas fa-sync-alt fa-2x"></i>
-        <span>Refresh Logs</span>
-    </button>
-    
-    <button class="big-btn bg-red" onclick="logout()">
-        <i class="fas fa-power-off fa-2x"></i>
-        <span>Logout</span>
-    </button>
-</div>
+                <button class="big-btn bg-blue" onclick="showView('kiosk')">
+                    <i class="fas fa-user-plus fa-2x"></i>
+                    <span>Open Visitor Kiosk</span>
+                </button>
+                
+                <button class="big-btn bg-teal" onclick="loadAdminLogs()">
+                    <i class="fas fa-sync-alt fa-2x"></i>
+                    <span>Refresh Logs</span>
+                    <small id="last-update" style="display:block; font-size: 11px; margin-top: 5px; opacity: 0.8;">Click to update</small>
+                </button>
+                
+                <button class="big-btn bg-red" onclick="logout()">
+                    <i class="fas fa-power-off fa-2x"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+
             <div class="table-section">
                 <div class="table-header"><i class="fas fa-list"></i> Official Visitor Records</div>
                 <table>
@@ -94,7 +96,7 @@
                     </select>
                 </div>
                 <button onclick="submitLog()" class="submit-btn">SUBMIT LOG</button>
-                <button onclick="showView('admin')" style="width:100%; padding:10px; background:#eee; border:none; cursor:pointer;">Back to Dashboard</button>
+                <button onclick="showView('admin')" style="width:100%; padding:10px; background:#eee; border:none; cursor:pointer; margin-top:10px;">Back to Dashboard</button>
             </div>
         </div>
 
