@@ -1,94 +1,94 @@
-const supabaseUrl = 'https://nkskdibhsqyxgirotoly.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5rc2tkaWJoc3F5eGdpcm90b2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYxNDQsImV4cCI6MjA4OTMzMjE0NH0.yq3jFykJN4EVgIJ1gTpf1ue2tq1zNz6keVCBcLxSAwc';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-const ADMINS = ['eduardo.donato@neu.edu.ph', 'jcesperanza@neu.edu.ph'];
-let isViewingAdmin = true;
+const ADMIN_PASS = "admin123";
 
 async function login() {
-    
-    await _supabase.auth.signInWithOAuth({ 
-        provider: 'google',
-        options: { 
-            redirectTo: window.location.origin + window.location.pathname,
-            queryParams: { prompt: 'select_account' }
-        }
-    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessCode = urlParams.get('access');
+
+    document.getElementById('auth-section').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+
+    if (accessCode === ADMIN_PASS) {
+        document.getElementById('user-status').innerText = "Admin: Professor Mode";
+        document.getElementById('role-switch-btn').style.display = 'block';
+        showView('admin');
+        loadAdminLogs();
+    } else {
+        document.getElementById('user-status').innerText = "Visitor Mode";
+        document.getElementById('role-switch-btn').style.display = 'none';
+        showView('kiosk');
+    }
 }
 
 async function checkSession() {
-    
-    const { data: { session } } = await _supabase.auth.getSession();
-    
-    if (session) {
-        
-        if (window.location.hash) {
-            window.history.replaceState(null, null, window.location.pathname);
-        }
-
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        const userEmail = session.user.email.toLowerCase();
-        document.getElementById('user-status').innerText = `User: ${userEmail}`;
-        
-        if (ADMINS.includes(userEmail)) {
-            document.getElementById('role-switch-btn').style.display = 'block';
-            showView('admin');
-        } else {
-            showView('kiosk');
-        }
-    }
+    document.getElementById('auth-section').style.display = 'block';
+    document.getElementById('main-app').style.display = 'none';
 }
 
 async function logout() {
-    await _supabase.auth.signOut();
     window.location.href = window.location.origin + window.location.pathname;
 }
 
-function showView(view) {
-    document.getElementById('admin-view').style.display = (view === 'admin') ? 'block' : 'none';
-    document.getElementById('kiosk-view').style.display = (view === 'kiosk') ? 'block' : 'none';
-    if(view === 'admin') loadAdminLogs();
-}
-
-function toggleRole() {
-    isViewingAdmin = !isViewingAdmin;
-    showView(isViewingAdmin ? 'admin' : 'kiosk');
-}
-
 async function loadAdminLogs() {
-    const { data } = await _supabase.from('attendance').select('*').order('logged_at', { ascending: false });
-    if (data) {
-        document.getElementById('stat-total').innerText = data.length;
-        document.getElementById('stat-students').innerText = data.filter(d => d.user_type === 'Student').length;
-        document.getElementById('stat-employees').innerText = data.filter(d => d.user_type === 'Employee').length;
-        document.getElementById('admin-log-data').innerHTML = data.map(log => `
-            <tr>
-                <td><strong>${log.full_name}</strong></td>
-                <td>${log.user_type || 'Student'}</td>
-                <td>${log.college}</td>
-                <td>${log.reason}</td>
-                <td>${new Date(log.logged_at).toLocaleTimeString()}</td>
-            </tr>`).join('');
-    }
+    const { data, error } = await _supabase
+        .from('visitors')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) return;
+
+    const tbody = document.getElementById('admin-log-body');
+    tbody.innerHTML = '';
+    
+    let studentCount = 0;
+    let staffCount = 0;
+
+    data.forEach(log => {
+        const row = `<tr>
+            <td>${new Date(log.created_at).toLocaleString()}</td>
+            <td>${log.full_name}</td>
+            <td>${log.user_type}</td>
+            <td>${log.college || 'N/A'}</td>
+            <td>${log.reason}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+
+        if (log.user_type === 'Student') studentCount++;
+        else staffCount++;
+    });
+
+    document.getElementById('total-visitors').innerText = data.length;
+    document.getElementById('student-count').innerText = studentCount;
+    document.getElementById('staff-count').innerText = staffCount;
 }
 
-async function submitLog() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    const entry = {
-        full_name: session.user.user_metadata.full_name,
-        email: session.user.email,
+async function submitVisitorData(event) {
+    event.preventDefault();
+    const btn = event.target.querySelector('button');
+    btn.disabled = true;
+    btn.innerText = 'Submitting...';
+
+    const formData = {
+        full_name: document.getElementById('full_name').value,
         user_type: document.getElementById('user_type').value,
         college: document.getElementById('college').value,
         reason: document.getElementById('reason').value
     };
-    const { error } = await _supabase.from('attendance').insert([entry]);
-    if (!error) {
-        alert("Success!");
-        if (!ADMINS.includes(session.user.email.toLowerCase())) logout();
-        else loadAdminLogs();
+
+    const { error } = await _supabase.from('visitors').insert([formData]);
+
+    if (error) {
+        alert('Error: ' + error.message);
+    } else {
+        alert('Successfully Registered!');
+        document.getElementById('visitor-form').reset();
     }
+    btn.disabled = false;
+    btn.innerText = 'Submit Entry';
 }
 
-setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-checkSession();
+function showView(view) {
+    document.getElementById('admin-view').style.display = view === 'admin' ? 'block' : 'none';
+    document.getElementById('kiosk-view').style.display = view === 'kiosk' ? 'block' : 'none';
+}
+
+window.onload = checkSession;
