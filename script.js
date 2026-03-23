@@ -6,7 +6,6 @@ const ADMINS = ['eduardo.donato@neu.edu.ph', 'jcesperanza@neu.edu.ph'];
 let isViewingAdmin = true;
 
 async function login() {
-    
     await _supabase.auth.signInWithOAuth({ 
         provider: 'google',
         options: { 
@@ -17,20 +16,15 @@ async function login() {
 }
 
 async function checkSession() {
-    
     const { data: { session } } = await _supabase.auth.getSession();
-    
     if (session) {
-        
         if (window.location.hash) {
             window.history.replaceState(null, null, window.location.pathname);
         }
-
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
         const userEmail = session.user.email.toLowerCase();
         document.getElementById('user-status').innerText = `User: ${userEmail}`;
-        
         if (ADMINS.includes(userEmail)) {
             document.getElementById('role-switch-btn').style.display = 'block';
             showView('admin');
@@ -42,7 +36,6 @@ async function checkSession() {
 
 async function logout() {
     await _supabase.auth.signOut();
-    
     window.location.href = window.location.origin + window.location.pathname;
 }
 
@@ -58,24 +51,44 @@ function toggleRole() {
 }
 
 async function loadAdminLogs() {
-    const { data } = await _supabase.from('attendance').select('*').order('logged_at', { ascending: false });
+    const { data, error } = await _supabase
+        .from('attendance')
+        .select('*')
+        .order('logged_at', { ascending: false });
+
+    if (error) return;
+
     if (data) {
-        document.getElementById('stat-total').innerText = data.length;
-        document.getElementById('stat-students').innerText = data.filter(d => d.user_type === 'Student').length;
-        document.getElementById('stat-employees').innerText = data.filter(d => d.user_type === 'Employee').length;
-        document.getElementById('admin-log-data').innerHTML = data.map(log => `
-            <tr>
-                <td><strong>${log.full_name}</strong></td>
-                <td>${log.user_type || 'Student'}</td>
-                <td>${log.college}</td>
-                <td>${log.reason}</td>
-                <td>${new Date(log.logged_at).toLocaleTimeString()}</td>
-            </tr>`).join('');
+        const total = data.length;
+        const students = data.filter(d => d.user_type === 'Student').length;
+        const employees = data.filter(d => d.user_type === 'Employee' || d.user_type === 'Teacher' || d.user_type === 'Staff').length;
+
+        const statTotal = document.getElementById('stat-total');
+        const statStudents = document.getElementById('stat-students');
+        const statEmployees = document.getElementById('stat-employees');
+        const logBody = document.getElementById('admin-log-data');
+
+        if(statTotal) statTotal.innerText = total;
+        if(statStudents) statStudents.innerText = students;
+        if(statEmployees) statEmployees.innerText = employees;
+
+        if (logBody) {
+            logBody.innerHTML = data.map(log => `
+                <tr>
+                    <td><strong>${log.full_name}</strong></td>
+                    <td>${log.user_type || 'Student'}</td>
+                    <td>${log.college || 'N/A'}</td>
+                    <td>${log.reason || 'N/A'}</td>
+                    <td>${new Date(log.logged_at).toLocaleTimeString()}</td>
+                </tr>`).join('');
+        }
     }
 }
 
 async function submitLog() {
     const { data: { session } } = await _supabase.auth.getSession();
+    if (!session) return;
+
     const entry = {
         full_name: session.user.user_metadata.full_name,
         email: session.user.email,
@@ -83,13 +96,23 @@ async function submitLog() {
         college: document.getElementById('college').value,
         reason: document.getElementById('reason').value
     };
+
     const { error } = await _supabase.from('attendance').insert([entry]);
     if (!error) {
-        alert("Success!");
-        if (!ADMINS.includes(session.user.email.toLowerCase())) logout();
-        else loadAdminLogs();
+        alert("Successfully Registered!");
+        if (!ADMINS.includes(session.user.email.toLowerCase())) {
+            logout();
+        } else {
+            loadAdminLogs();
+        }
+    } else {
+        alert("Error: " + error.message);
     }
 }
 
-setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+setInterval(() => { 
+    const clockEl = document.getElementById('clock');
+    if(clockEl) clockEl.innerText = new Date().toLocaleTimeString(); 
+}, 1000);
+
 checkSession();
